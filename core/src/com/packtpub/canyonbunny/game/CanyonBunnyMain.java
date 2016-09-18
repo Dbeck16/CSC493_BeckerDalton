@@ -7,7 +7,11 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
-
+/**
+ *
+ * @author Dalton Becker
+ *
+ */
 public class CanyonBunnyMain implements ApplicationListener, com.badlogic.gdx.ApplicationListener
 {
 	private static final String TAG = CanyonBunnyMain.class.getName();

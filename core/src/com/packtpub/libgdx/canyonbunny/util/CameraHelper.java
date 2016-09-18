@@ -5,6 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+
+/**
+ *
+ * @author Dalton Becker
+ *
+ */
 public class CameraHelper
 {
 	private static final String TAG = CameraHelper.class.getName();

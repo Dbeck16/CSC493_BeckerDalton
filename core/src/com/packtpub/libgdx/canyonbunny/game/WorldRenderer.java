@@ -6,6 +6,11 @@ import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ *
+ * @author Dalton Becker
+ *
+ */
 public class WorldRenderer implements Disposable
 {
 	private OrthographicCamera camera;

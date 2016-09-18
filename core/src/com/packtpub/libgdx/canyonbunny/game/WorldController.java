@@ -11,6 +11,12 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
 
+/**
+ *
+ * @author Dalton Becker
+ *
+ */
+
 public class WorldController extends InputAdapter
 {
 	private static final String TAG = WorldController.class.getName();
