@@ -1,5 +1,10 @@
 package com.packtpub.canyonbunny.game;
 
+/**
+ *
+ * @author Dalton Becker
+ *
+ */
 public interface ApplicationListener
 {
 
