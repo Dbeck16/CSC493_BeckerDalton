@@ -15,7 +15,7 @@ import com.packtpub.canyonbunny.game.CanyonBunnyMain;
 public class DesktopLauncher
 {
 	// Keeps track of whether or not to rebuild the texture atlas.
-	private static boolean rebuildAtlas = true;
+	private static boolean rebuildAtlas = false;
 	// Checks if it should (re)draw debug outlines in the texture atlas
 	private static boolean drawDebugOutline = true;
 
