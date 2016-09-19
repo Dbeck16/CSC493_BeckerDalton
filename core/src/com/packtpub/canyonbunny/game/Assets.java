@@ -19,11 +19,6 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 public class Assets implements Disposable, AssetErrorListener
 {
 
-	public AssetBunny bunny;
-	public AssetRock rock;
-	public AssetGoldCoin goldCoin;
-	public AssetFeather feather;
-	public AssetLevelDecoration levelDecoration;
 
 	//Sets the TAG for this class for console output
 	public static final String TAG = Assets.class.getName();
@@ -34,6 +29,13 @@ public class Assets implements Disposable, AssetErrorListener
 
 	//Singleton: prevent instantation from other classes
 	private Assets(){}
+
+
+	public AssetBunny bunny;
+	public AssetRock rock;
+	public AssetGoldCoin goldCoin;
+	public AssetFeather feather;
+	public AssetLevelDecoration levelDecoration;
 
 	//initializes the asset manager for this class
 	public void init(AssetManager assetManager)
@@ -91,7 +93,7 @@ public class Assets implements Disposable, AssetErrorListener
 		assetManager.dispose();
 		System.out.println("Disposed");
 	}
-	
+
 	//sub class for the Bunny head
 	public class AssetBunny
 	{
@@ -115,7 +117,7 @@ public class Assets implements Disposable, AssetErrorListener
 			 middle = atlas.findRegion("rock_middle");
 		 }
 	}
-	
+
 	//subclass for building the gold coin texture
 	public class AssetGoldCoin
 	{
@@ -125,7 +127,7 @@ public class Assets implements Disposable, AssetErrorListener
 			 goldCoin = atlas.findRegion("item_gold_coin");
 		 }
 	}
-	
+
 	//builds the texture for feathers
 	public class AssetFeather
 	{
@@ -135,7 +137,7 @@ public class Assets implements Disposable, AssetErrorListener
 			 feather = atlas.findRegion("item_feather");
 		 }
 	}
-	
+
 	//builds all the decorations for levels.
 	public class AssetLevelDecoration
 	{

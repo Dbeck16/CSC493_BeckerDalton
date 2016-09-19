@@ -79,6 +79,7 @@ public class CanyonBunnyMain implements ApplicationListener, com.badlogic.gdx.Ap
 		Assets.instance.init(new AssetManager());
 		paused = false;
 	}
+	
 	//disposes of unneccessary instances after completion
 	@Override
 	public void dispose()
