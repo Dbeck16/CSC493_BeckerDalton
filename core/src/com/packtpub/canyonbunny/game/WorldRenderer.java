@@ -1,4 +1,4 @@
-package com.packtpub.libgdx.canyonbunny.game;
+package com.packtpub.canyonbunny.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,7 +7,7 @@ import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
- *
+ * Renderer for the game
  * @author Dalton Becker
  *
  */

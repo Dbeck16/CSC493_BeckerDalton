@@ -1,4 +1,4 @@
-package com.packtpub.libgdx.canyonbunny.game;
+package com.packtpub.canyonbunny.game;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -9,7 +9,10 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
+
 
 /**
  *
@@ -41,18 +44,17 @@ public class WorldController extends InputAdapter
 	{
 		//create new array for 5 sprites
 		testSprites = new Sprite[5];
-		//Create empty POT-sized pixmap with 8 bit rgba pixel data
-		int width = 32;
-		int height  = 32;
-		Pixmap pixmap = createProceduralPixmap(width, height);
 
-		//create a new texture from pixmap data
-		Texture texture = new Texture(pixmap);
+		//Create a list of texture regions
+		Array<TextureRegion> regions = new Array<TextureRegion>();
+		regions.add(Assets.instance.bunny.head);
+		regions.add(Assets.instance.feather.feather);
+		regions.add(Assets.instance.goldCoin.goldCoin);
 
 		//Create new sprites sing the just created texture
 		for (int i = 0; i < testSprites.length; i++)
 		{
-			Sprite spr = new Sprite(texture);
+			Sprite spr = new Sprite(regions.random());
 
 			//Define sprite size to be 1m x 1m in game world
 			spr.setSize(1,  1);
