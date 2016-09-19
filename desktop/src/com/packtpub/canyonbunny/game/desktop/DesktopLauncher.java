@@ -30,6 +30,7 @@ public class DesktopLauncher
 			settings.duplicatePadding = false;
 			settings.debug = drawDebugOutline;
 
+
 			TexturePacker.process(settings, "assets-raw/images/", "../core/assets/images/", "canyonbunny.pack");
 		}
 
