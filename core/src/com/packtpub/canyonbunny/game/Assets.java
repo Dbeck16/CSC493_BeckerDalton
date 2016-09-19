@@ -31,11 +31,8 @@ public class Assets implements Disposable, AssetErrorListener
 	private Assets(){}
 
 
-	public AssetBunny bunny;
-	public AssetRock rock;
-	public AssetGoldCoin goldCoin;
-	public AssetFeather feather;
-	public AssetLevelDecoration levelDecoration;
+	public AssetMain main;
+	public AssetDesk desk;
 
 	//initializes the asset manager for this class
 	public void init(AssetManager assetManager)
@@ -65,11 +62,8 @@ public class Assets implements Disposable, AssetErrorListener
 		}
 
 		//create the game resource objects.
-		bunny = new AssetBunny(atlas);
-		rock = new AssetRock(atlas);
-		goldCoin = new AssetGoldCoin(atlas);
-		feather = new AssetFeather(atlas);
-		levelDecoration = new AssetLevelDecoration(atlas);
+		desk = new AssetDesk(atlas);
+		main = new AssetMain(atlas);
 	}
 
 
@@ -94,7 +88,27 @@ public class Assets implements Disposable, AssetErrorListener
 		System.out.println("Disposed");
 	}
 
-	//sub class for the Bunny head
+	public class AssetMain
+	{
+		public final AtlasRegion main;
+
+		public AssetMain (TextureAtlas atlas)
+		{
+			main = atlas.findRegion("Main");
+		}
+
+	}
+	public class AssetDesk
+	{
+		public final AtlasRegion desk;
+
+		public AssetDesk (TextureAtlas atlas)
+		{
+			desk = atlas.findRegion("desk");
+		}
+
+	}
+/**	//sub class for the Bunny head
 	public class AssetBunny
 	{
 		public final AtlasRegion head;
@@ -157,4 +171,5 @@ public class Assets implements Disposable, AssetErrorListener
 			 waterOverlay = atlas.findRegion("water_overlay");
 		 }
 	}
+*/
 }
