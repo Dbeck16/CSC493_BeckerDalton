@@ -15,7 +15,7 @@ import com.packtpub.canyonbunny.game.CanyonBunnyMain;
 public class DesktopLauncher
 {
 	// Keeps track of whether or not to rebuild the texture atlas.
-	private static boolean rebuildAtlas = true;
+	private static boolean rebuildAtlas = false;
 	// Checks if it should (re)draw debug outlines in the texture atlas
 	private static boolean drawDebugOutline = true;
 
@@ -36,7 +36,7 @@ public class DesktopLauncher
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 
 		// sets the title of the game
-		cfg.title = "CanyonBunny";
+		cfg.title = "MyGame";
 
 		// Sets the width and height of the window
 		cfg.width = 800;
