@@ -66,12 +66,12 @@ public class WorldController extends InputAdapter
 			float randomX = MathUtils.random(-2.0f, 2.0f);
 			float randomY = MathUtils.random(-2.0f, 2.0f);
 			spr.setPosition(randomX, randomY);
+			spr.setRotation((float) (Math.random()*360));
 
 			//put new sprite into array
 			testSprites[i] = spr;
 		}
 		//set first sprite as selected one
-
 		selectedSprite = 0;
 	}
 
