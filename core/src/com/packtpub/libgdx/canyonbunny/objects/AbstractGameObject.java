@@ -11,20 +11,29 @@ public abstract class AbstractGameObject
     public Vector2 origin;
     public Vector2 scale;
     public float rotation;
-
+    /**
+     * abstract class for all game objects
+     */
     public AbstractGameObject()
     {
-    	position = new Vector2();
-    	dimension = new Vector2(1,1);
-    	origin = new Vector2();
-    	scale = new Vector2(1,1);
-    	rotation = 0;
+    	position = new Vector2(); //keeps track of position
+    	dimension = new Vector2(1,1);	//keeps track of dimension
+    	origin = new Vector2();	//keeps track of the origin
+    	scale = new Vector2(1,1);	//keeps track of the scale of objects
+    	rotation = 0;	//keeps track of any rotation
     }
 
+    /**
+     * updates objects as they change
+     * @param deltaTime
+     */
     public void update(float deltaTime)
     {
 
     }
-
-    public  abstract void render (SpriteBatch batch);
+    /**
+     * Renders images
+     * @param batch
+     */
+    public abstract void render (SpriteBatch batch);
 }

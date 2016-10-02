@@ -13,18 +13,24 @@ public class Clouds extends AbstractGameObject
 
 	private Array<TextureRegion> regClouds;
 	private Array<Cloud> clouds;
-
+/**
+ * FLUFFLY CLOUDS CLASS!
+ * @author Dalton
+ *
+ */
 	private class Cloud extends AbstractGameObject
 	{
 		private TextureRegion regCloud;
 
 		public Cloud(){}
-
+		//Sets the region of the cloud
 		public void setRegion (TextureRegion region)
 		{
 			regCloud = region;
 		}
-
+		/**
+		 * Render method for Clouds
+		 */
 		@Override
 		public void render (SpriteBatch batch)
 		{
@@ -34,6 +40,10 @@ public class Clouds extends AbstractGameObject
 					reg.getRegionHeight(),false,false);
 		}
 	}
+	/**
+	 * Constrctor for the clouds class
+	 * @param length
+	 */
 	public Clouds (float length)
 	{
 		this.length = length;

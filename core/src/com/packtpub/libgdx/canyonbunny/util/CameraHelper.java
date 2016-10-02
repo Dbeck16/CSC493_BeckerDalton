@@ -1,7 +1,7 @@
 package com.packtpub.libgdx.canyonbunny.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.packtpub.libgdx.canyonbunny.objects.AbstractGameObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -14,14 +14,17 @@ import com.badlogic.gdx.math.Vector2;
 public class CameraHelper
 {
 	private static final String TAG = CameraHelper.class.getName();
-	private final float MAX_ZOOM_IN = 0.25f;
-	private final float MAX_ZOOM_OUT = 10.0f;
+	private final float MAX_ZOOM_IN = 0.25f; //max zoom in
+	private final float MAX_ZOOM_OUT = 10.0f; //max zoom out
 
-	private Vector2 position;
-	private float zoom;
+	private Vector2 position; //keeps track of camera position
+	private float zoom;	//keeps track of how far zoomed in/out you are
 
-	private Sprite target;
+	private AbstractGameObject target; //Keeps track of the target
 
+	/**
+	 * CameraHelper Constructor
+	 */
 	public CameraHelper()
 	{
 		position = new Vector2();
@@ -30,15 +33,15 @@ public class CameraHelper
 
 
 	/**
-	 *
+	 *update method for cameraHelper
 	 * @param deltaTime
 	 */
 	public void update (float deltaTime)
 	{
 		if (!hasTarget()) return;
 
-		position.x = target.getX() + target.getOriginX();
-		position.y = target.getY() + target.getOriginY();
+		position.x = target.position.x + target.origin.x;
+		position.y = target.position.y + target.origin.y;
 	}
 
 
@@ -91,21 +94,21 @@ public class CameraHelper
 	 * Sets a target for the camera
 	 * @param target
 	 */
-	public void setTarget(Sprite target)
+	public void setTarget(AbstractGameObject target)
 	{
 		this.target = target;
 	}
 	/**
 	 * Getter for which target is being followed
-	 * @return
+	 * @return current target
 	 */
-	public Sprite getTarget()
+	public AbstractGameObject getTarget()
 	{
 		return target;
 	}
 	/**
-	 * checks
-	 * @return
+	 * checks if we have a target
+	 * @return if we have a target
 	 */
 	public boolean hasTarget()
 	{
@@ -116,7 +119,7 @@ public class CameraHelper
 	 * @param target
 	 * @return
 	 */
-	public boolean hasTarget(Sprite target)
+	public boolean hasTarget(AbstractGameObject target)
 	{
 		return hasTarget() && this.target.equals(target);
 	}

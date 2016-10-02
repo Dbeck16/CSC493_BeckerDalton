@@ -17,5 +17,11 @@ public class Constants
 	public static final String TEXTURE_ATLAS_OBJECTS = "../core/assets/images/canyonbunny.pack.atlas";
 
 	// Location of image file for level 01
-	public static final String LEVEL_01 = "levels/level-01.png";
+	public static final String LEVEL_01 = "../core/assets/levels/level-01.png";
+	//GUI Width
+	public static final float VIEWPORT_GUI_WIDTH = 800.0f;
+	//GUI Height
+	public static final float VIEWPORT_GUI_HEIGHT = 480.0f;
+	//Amount of extra lives at level start
+	public static final int LIVES_START = 3;
 }

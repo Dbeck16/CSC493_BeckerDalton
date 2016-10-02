@@ -7,16 +7,20 @@ import com.packtpub.canyonbunny.game.Assets;
 
 public class Rock extends AbstractGameObject
 {
-	private TextureRegion regEdge;
-	private TextureRegion regMiddle;
+	private TextureRegion regEdge; //holds reg edge
+	private TextureRegion regMiddle; //holds reg middle
 
-	private int length;
-
+	private int length; //keeps track of the length of the rock
+	/**
+	 * Rock constructor
+	 */
 	public Rock()
 	{
 		init();
 	}
-
+	/**
+	 * Rocks initialization function
+	 */
 	private void init()
 	{
 		dimension.set(1,1.5f);
@@ -27,17 +31,25 @@ public class Rock extends AbstractGameObject
 		//start length of this rock
 		setLength(1);
 	}
-
+	/**
+	 * Sets the length of the rock
+	 * @param length
+	 */
 	public void setLength(int length)
 	{
 		this.length = length;
 	}
-
+	/**
+	 * Gives the ability to increase the length of the rock
+	 * @param amount
+	 */
 	public void increaseLength(int amount)
 	{
 		setLength(length += amount);
 	}
-
+	/**
+	 * Renders the rock
+	 */
 	@Override
 	public void render(SpriteBatch batch)
 	{

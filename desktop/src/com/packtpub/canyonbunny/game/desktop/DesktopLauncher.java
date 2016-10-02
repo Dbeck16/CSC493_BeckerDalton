@@ -17,18 +17,21 @@ public class DesktopLauncher
 	// Keeps track of whether or not to rebuild the texture atlas.
 	private static boolean rebuildAtlas = false;
 	// Checks if it should (re)draw debug outlines in the texture atlas
-	private static boolean drawDebugOutline = true;
-
+	private static boolean drawDebugOutline = false;
+/**
+ * Main function for runnning the game
+ * @param arg
+ */
 	public static void main(String[] arg)
 	{
 		// Checks if it should rebuild the texture atlas
 		if (rebuildAtlas)
 		{
 			Settings settings = new Settings();
-			settings.maxWidth = 1024;
-			settings.maxHeight = 1024;
+			settings.maxWidth = 1024;//sets max viewport width
+			settings.maxHeight = 1024;//sets max viewport height
 			settings.duplicatePadding = false;
-			settings.debug = drawDebugOutline;
+			settings.debug = drawDebugOutline;//draws debug outlines in texture atlas if true
 
 			TexturePacker.process(settings, "assets-raw/images/", "../core/assets/images/", "canyonbunny.pack");
 		}
