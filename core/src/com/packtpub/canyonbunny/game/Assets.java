@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 /**
  * Assets manager for keeping tracks of textures.
  * @author Dalton
@@ -25,6 +27,7 @@ public class Assets implements Disposable, AssetErrorListener
 	//creates a single Assets instance called instance
 	public static final Assets instance = new Assets();
 
+	public AssetFonts fonts;
 	private AssetManager assetManager;
 
 	//Singleton: prevent instantation from other classes
@@ -32,7 +35,9 @@ public class Assets implements Disposable, AssetErrorListener
 
 
 	public AssetMain main;
-	public AssetDesk desk;
+	public AssetLevelDecoration levelDecoration;
+	public AssetTiles tile;
+	public AssetBeer beer;
 
 	//initializes the asset manager for this class
 	public void init(AssetManager assetManager)
@@ -62,8 +67,11 @@ public class Assets implements Disposable, AssetErrorListener
 		}
 
 		//create the game resource objects.
-		desk = new AssetDesk(atlas);
 		main = new AssetMain(atlas);
+		tile = new AssetTiles(atlas);
+		beer = new AssetBeer(atlas);
+		levelDecoration = new AssetLevelDecoration(atlas);
+		fonts = new AssetFonts();
 	}
 
 
@@ -85,6 +93,9 @@ public class Assets implements Disposable, AssetErrorListener
 	public void dispose()
 	{
 		assetManager.dispose();
+		fonts.defaultSmall.dispose();
+		fonts.defaultNormal.dispose();
+		fonts.defaultBig.dispose();
 		System.out.println("Disposed");
 	}
 
@@ -98,78 +109,64 @@ public class Assets implements Disposable, AssetErrorListener
 		}
 
 	}
-	public class AssetDesk
+	public class AssetTiles
 	{
-		public final AtlasRegion desk;
-
-		public AssetDesk (TextureAtlas atlas)
+		public final AtlasRegion tile;
+		public AssetTiles(TextureAtlas atlas)
 		{
-			desk = atlas.findRegion("desk");
+			tile = atlas.findRegion("Tile");
 		}
-
-	}
-/**	//sub class for the Bunny head
-	public class AssetBunny
-	{
-		public final AtlasRegion head;
-
-		public AssetBunny (TextureAtlas atlas)
-		{
-			head = atlas.findRegion("bunny_head");
-		}
-
 	}
 
-	//subclass for the the rock and edges
-	public class AssetRock
-	{
-		 public final AtlasRegion edge;
-		 public final AtlasRegion middle;
-		 public AssetRock (TextureAtlas atlas)
-		 {
-			 edge = atlas.findRegion("rock_edge");
-			 middle = atlas.findRegion("rock_middle");
-		 }
-	}
-
-	//subclass for building the gold coin texture
-	public class AssetGoldCoin
-	{
-		 public final AtlasRegion goldCoin;
-		 public AssetGoldCoin (TextureAtlas atlas)
-		 {
-			 goldCoin = atlas.findRegion("item_gold_coin");
-		 }
-	}
-
-	//builds the texture for feathers
-	public class AssetFeather
-	{
-		 public final AtlasRegion feather;
-		 public AssetFeather (TextureAtlas atlas)
-		 {
-			 feather = atlas.findRegion("item_feather");
-		 }
-	}
-
-	//builds all the decorations for levels.
 	public class AssetLevelDecoration
 	{
-		 public final AtlasRegion cloud01;
-		 public final AtlasRegion cloud02;
-		 public final AtlasRegion cloud03;
-		 public final AtlasRegion mountainLeft;
-		 public final AtlasRegion mountainRight;
-		 public final AtlasRegion waterOverlay;
+		 public final AtlasRegion buildings;
+		 public final AtlasRegion sky;
+
 		 public AssetLevelDecoration (TextureAtlas atlas)
 		 {
-			 cloud01 = atlas.findRegion("cloud01");
-			 cloud02 = atlas.findRegion("cloud02");
-			 cloud03 = atlas.findRegion("cloud03");
-			 mountainLeft = atlas.findRegion("mountain_left");
-			 mountainRight = atlas.findRegion("mountain_right");
-			 waterOverlay = atlas.findRegion("water_overlay");
+			 buildings = atlas.findRegion("Buildings");
+			 sky = atlas.findRegion("Sky");
 		 }
 	}
-*/
+	public class AssetBeer
+	{
+		public final AtlasRegion beer;
+		public AssetBeer(TextureAtlas atlas)
+		{
+			beer = atlas.findRegion("Beer");
+		}
+	}
+	public class AssetFonts
+	{
+		public final BitmapFont defaultSmall;
+		public final BitmapFont defaultNormal;
+		public final BitmapFont defaultBig;
+
+		public AssetFonts ()
+		{
+		// create three fonts using Libgdx's 15px bitmap font
+			defaultSmall = new BitmapFont(
+				Gdx.files.internal("images/arial-15.fnt"), true);
+			defaultNormal = new BitmapFont(
+				Gdx.files.internal("images/arial-15.fnt"), true);
+			defaultBig = new BitmapFont(
+				Gdx.files.internal("images/arial-15.fnt"), true);
+
+			// set font sizes
+
+			defaultSmall.getData().setScale(0.75f);
+			defaultNormal.getData().setScale(1.0f);
+			defaultBig.getData().setScale(2.0f);
+
+			// enable linear texture filtering for smooth fonts
+			defaultSmall.getRegion().getTexture().setFilter(
+				TextureFilter.Linear, TextureFilter.Linear);
+			defaultNormal.getRegion().getTexture().setFilter(
+				TextureFilter.Linear, TextureFilter.Linear);
+			defaultBig.getRegion().getTexture().setFilter(
+				TextureFilter.Linear, TextureFilter.Linear);
+			}
+
+	}
 }

@@ -1,20 +1,41 @@
 
 canyonbunny.pack.png
-size: 256,128
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+Beer
+  rotate: false
+  xy: 2, 36
+  size: 150, 440
+  orig: 150, 440
+  offset: 0, 0
+  index: -1
+Buildings
+  rotate: false
+  xy: 2, 478
+  size: 789, 322
+  orig: 789, 322
+  offset: 0, 0
+  index: -1
 Main
   rotate: false
-  xy: 159, 11
+  xy: 793, 736
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-desk
+Sky
+  rotate: false
+  xy: 154, 220
+  size: 320, 256
+  orig: 320, 256
+  offset: 0, 0
+  index: -1
+Tile
   rotate: false
   xy: 2, 2
-  size: 155, 73
-  orig: 155, 73
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
