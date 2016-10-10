@@ -8,6 +8,10 @@ import com.packtpub.libgdx.canyonbunny.objects.Clouds;
 import com.packtpub.libgdx.canyonbunny.objects.Mountains;
 import com.packtpub.libgdx.canyonbunny.objects.Rock;
 import com.packtpub.libgdx.canyonbunny.objects.WaterOverlay;
+import com.packtpub.libgdx.canyonbunny.objects.BunnyHead;
+import com.packtpub.libgdx.canyonbunny.objects.Feather;
+import com.packtpub.libgdx.canyonbunny.objects.GoldCoin;
+
 /**
  *
  * @author Dalton
@@ -17,8 +21,38 @@ import com.packtpub.libgdx.canyonbunny.objects.WaterOverlay;
 public class Level
 {
 	public static final String TAG = Level.class.getName(); //uses TAG to print lines in console
+	public BunnyHead bunnyHead;
+	public Array<GoldCoin> goldCoins;
+	public Array<Feather> feathers;
 
 
+	/**
+	 * updates everything loaded in the level when called
+	 * @param deltaTime
+	 */
+	public void update(float deltaTime)
+	{
+		bunnyHead.update(deltaTime);
+		for (Rock rock : rocks)
+
+			rock.update(deltaTime);
+
+		for(GoldCoin goldCoin : goldCoins)
+
+			goldCoin.update(deltaTime);
+
+		for(Feather feather : feathers)
+
+			feather.update(deltaTime);
+
+		clouds.update(deltaTime);
+	}
+
+	/**
+	 * enum for holding color values of bitmap levels
+	 * @author Dalton
+	 *
+	 */
 	public enum BLOCK_TYPE //hold values for level being loaded in.. using rgba values it can determine what each color does
 	{
 		EMPTY(0, 0, 0), //black
@@ -75,8 +109,16 @@ public class Level
  */
 	private void init (String filename)
 	{
-		rocks = new Array<Rock>(); //array for holding all of the rocks
 
+		//objects
+		rocks = new Array<Rock>(); //array for holding all of the rocks
+		goldCoins = new Array<GoldCoin> ();
+		feathers = new Array<Feather>();
+
+
+
+		//player character
+		bunnyHead = null;
 		//load image file that respresents the level data
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
 		//scan pixels from top-left to bottom right
@@ -118,13 +160,27 @@ public class Level
 				//player spawn point
 				else if(BLOCK_TYPE.PLAYER_SPAWNPOINT.sameColor(currentPixel))
 				{
+					obj = new BunnyHead();
+					offsetHeight = -3.0f;
+					obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
+					bunnyHead = (BunnyHead)obj;
 				}
 				//feather
 				else if(BLOCK_TYPE.ITEM_FEATHER.sameColor(currentPixel))
 				{
+					obj = new Feather();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y
+							+ offsetHeight);
+					feathers.add((Feather)obj);
 				}
 				else if( BLOCK_TYPE.ITEM_GOLD_COIN.sameColor(currentPixel))
 				{
+					obj = new GoldCoin();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y
+							+ offsetHeight);
+					goldCoins.add((GoldCoin)obj);
 				}
 				else
 				{
@@ -167,6 +223,20 @@ public class Level
 
 		//Draw clouds
 		clouds.render(batch);
+
+		//Draw player
+		bunnyHead.render(batch);
+
+		//Draw coins
+		for(GoldCoin goldCoin : goldCoins)
+		{
+			goldCoin.render(batch);
+		}
+		//draw feathers
+		for(Feather feather : feathers)
+		{
+			feather.render(batch);
+		}
 	}
 
 }
