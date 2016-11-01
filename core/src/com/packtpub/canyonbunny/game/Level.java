@@ -8,6 +8,10 @@ import com.packtpub.libgdx.canyonbunny.objects.AbstractGameObject;
 import com.packtpub.libgdx.canyonbunny.objects.Sky;
 import com.packtpub.libgdx.canyonbunny.objects.Tiles;
 import com.packtpub.libgdx.canyonbunny.objects.Buildings;
+import com.packtpub.libgdx.canyonbunny.objects.Beer;
+import com.packtpub.libgdx.canyonbunny.objects.Diploma;
+import com.packtpub.libgdx.canyonbunny.objects.Main;
+
 /**
  *
  * @author Dalton
@@ -17,6 +21,9 @@ import com.packtpub.libgdx.canyonbunny.objects.Buildings;
 public class Level
 {
 	public static final String TAG = Level.class.getName(); //uses TAG to print lines in console
+	public Main main;
+	public Array<Beer> beer;
+	public Array<Diploma> diploma;
 
 
 	public enum BLOCK_TYPE //hold values for level being loaded in.. using rgba values it can determine what each color does
@@ -74,10 +81,18 @@ public class Level
  */
 	private void init (String filename)
 	{
+		//player character
+		main = null;
+
+		//objects
 		tiles = new Array<Tiles>(); //array for holding all of the rocks
+		beer = new Array<Beer>();
+		diploma = new Array<Diploma>();
 
 		//load image file that respresents the level data
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
+
+
 		//scan pixels from top-left to bottom right
 		int lastPixel = -1;
 		for(int pixelY = 0; pixelY < pixmap.getHeight(); pixelY++)
@@ -117,13 +132,28 @@ public class Level
 				//player spawn point
 				else if(BLOCK_TYPE.PLAYER_SPAWNPOINT.sameColor(currentPixel))
 				{
+					obj = new Main();
+					offsetHeight = -3.0f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y + offsetHeight);
+					main = (Main)obj;
+
 				}
 				//feather
 				else if(BLOCK_TYPE.ITEM_BEER.sameColor(currentPixel))
 				{
+					obj = new Beer();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y
+							+ offsetHeight);
+					beer.add((Beer)obj);
 				}
 				else if( BLOCK_TYPE.ITEM_PAPER.sameColor(currentPixel))
 				{
+					obj = new Diploma();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX,baseHeight * obj.dimension.y
+							+ offsetHeight);
+					diploma.add((Diploma)obj);
 				}
 				else
 				{
@@ -159,7 +189,38 @@ public class Level
 		//Draw Rocks
 		for(Tiles tile : tiles)
 			tile.render(batch);
-		//Draw Water Overlay
+
+		//draw player
+		main.render(batch);
+
+		//draw beers
+		for(Beer beer : beer)
+			beer.render(batch);
+
+		//draw diplomas
+		for(Diploma diploma : diploma)
+			diploma.render(batch);
+
+	}
+	/**
+	 * updates everything loaded in the level when called
+	 * @param deltaTime
+	 */
+	public void update(float deltaTime)
+	{
+		main.update(deltaTime);
+		for (Tiles tile : tiles)
+
+			tile.update(deltaTime);
+
+		for(Beer beer : beer)
+
+			beer.update(deltaTime);
+
+		for(Diploma diploma : diploma)
+
+			diploma.update(deltaTime);
+
 	}
 
 }

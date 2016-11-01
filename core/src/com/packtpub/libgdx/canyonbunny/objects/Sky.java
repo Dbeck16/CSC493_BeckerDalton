@@ -4,7 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.packtpub.canyonbunny.game.Assets;
-
+/**
+ * Sky, hidden behind the buildings, class
+ * @author Dalton
+ *
+ */
 
 public class Sky extends AbstractGameObject
 {
@@ -12,12 +16,18 @@ public class Sky extends AbstractGameObject
 
 	private int length;
 
+	/**
+	 * constructor for the sky
+	 * @param length
+	 */
 	public Sky (int length)
 	{
 		this.length = length;
 		init();
 	}
-
+	/*
+	 * Initializes our beautiful sky
+	 */
 	private void init()
 	{
 		dimension.set(10, 2);
@@ -27,7 +37,10 @@ public class Sky extends AbstractGameObject
 		origin.x = -dimension.x * 2;
 		length += dimension.x *2;
 	}
-
+	/**
+	 * Function for drawing our beautiful sky based on length of the level
+	 * @param batch
+	 */
 	private void drawSky(SpriteBatch batch)
 	{
 		TextureRegion reg = null;
@@ -53,7 +66,9 @@ public class Sky extends AbstractGameObject
 		}
 		//reset color to white
 	}
-
+	/**
+	 * renders the sky
+	 */
 	@Override
 	public void render(SpriteBatch batch)
 	{

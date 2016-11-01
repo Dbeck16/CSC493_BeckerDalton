@@ -4,19 +4,28 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.packtpub.canyonbunny.game.Assets;
-
+/**
+ * Building class for scenery
+ * @author Dalton
+ *
+ */
 public class Buildings extends AbstractGameObject
 {
 	private TextureRegion Building;
 
 	private int length;
-
+	/**
+	 * constructor for buildings class
+	 * @param length
+	 */
 	public Buildings (int length)
 	{
 		this.length = length;
 		init();
 	}
-
+	/**
+	 * initilializes the buildings
+	 */
 	private void init()
 	{
 		dimension.set(20, 4);
@@ -26,7 +35,10 @@ public class Buildings extends AbstractGameObject
 		origin.x = -dimension.x * 2;
 		length += dimension.x *2;
 	}
-
+	/**
+	 * Draws our lovely buildings
+	 * @param batch
+	 */
 	private void drawBuildings(SpriteBatch batch)
 	{
 		TextureRegion reg = null;
@@ -52,7 +64,9 @@ public class Buildings extends AbstractGameObject
 		}
 		//reset color to white
 	}
-
+/**
+ * Renders the buildings
+ */
 	@Override
 	public void render(SpriteBatch batch)
 	{

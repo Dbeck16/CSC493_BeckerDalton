@@ -38,6 +38,7 @@ public class Assets implements Disposable, AssetErrorListener
 	public AssetLevelDecoration levelDecoration;
 	public AssetTiles tile;
 	public AssetBeer beer;
+	public AssetScroll scroll;
 
 	//initializes the asset manager for this class
 	public void init(AssetManager assetManager)
@@ -70,6 +71,7 @@ public class Assets implements Disposable, AssetErrorListener
 		main = new AssetMain(atlas);
 		tile = new AssetTiles(atlas);
 		beer = new AssetBeer(atlas);
+		scroll = new AssetScroll(atlas);
 		levelDecoration = new AssetLevelDecoration(atlas);
 		fonts = new AssetFonts();
 	}
@@ -135,6 +137,14 @@ public class Assets implements Disposable, AssetErrorListener
 		public AssetBeer(TextureAtlas atlas)
 		{
 			beer = atlas.findRegion("Beer");
+		}
+	}
+	public class AssetScroll
+	{
+		public final AtlasRegion scroll;
+		public AssetScroll(TextureAtlas atlas)
+		{
+			scroll = atlas.findRegion("Scroll");
 		}
 	}
 	public class AssetFonts

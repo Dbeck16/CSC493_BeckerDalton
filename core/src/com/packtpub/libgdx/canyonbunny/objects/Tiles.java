@@ -4,17 +4,28 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.canyonbunny.game.Assets;
 
-
+/**
+ * Tiles class for the platform in game
+ * @author Dalton
+ *
+ */
 public class Tiles extends AbstractGameObject
 {
-	private TextureRegion regTile;
+	private TextureRegion regTile; //region of our tile
 
-	private int length;
+	private int length; //how long the tiles are
 
+	/**
+	 * Tile constructor
+	 */
 	public Tiles()
 	{
 		init();
 	}
+
+	/**
+	 * initializes our tiles
+	 */
 
 	private void init()
 	{
@@ -26,17 +37,28 @@ public class Tiles extends AbstractGameObject
 		//start length of this rock
 		setLength(1);
 	}
-
+	/**
+	 * method for changing the lengths of tiles
+	 * @param length
+	 */
 	public void setLength(int length)
 	{
 		this.length = length;
+		//update the bounding box for collision detection.
+		bounds.set(0,0,dimension.x *length,dimension.y);
 	}
-
+	
+	/**
+	 * ability to increase lengths of tiles
+	 * @param amount
+	 */
 	public void increaseLength(int amount)
 	{
 		setLength(length += amount);
 	}
-
+/**
+ * renders our tiles
+ */
 	@Override
 	public void render(SpriteBatch batch)
 	{
