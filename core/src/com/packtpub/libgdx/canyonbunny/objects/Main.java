@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.canyonbunny.game.Assets;
+import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 /**
  * Not to be confused with main function. This is our main character
  * @author Dalton
@@ -150,6 +152,8 @@ public class Main extends AbstractGameObject
 	public void render(SpriteBatch batch)
 	{
 		TextureRegion reg = null;
+		//apply skin color
+				batch.setColor(CharacterSkin.values()[GamePreferences.instance.charSkin].getColor());
 		//set a special color when game object has a feather powerup
 		if (hasBeerPowerup)
 		{

@@ -5,11 +5,13 @@ import com.packtpub.libgdx.canyonbunny.objects.Main.JUMP_STATE;
 import com.packtpub.libgdx.canyonbunny.objects.Diploma;
 import com.packtpub.libgdx.canyonbunny.objects.Beer;
 import com.packtpub.libgdx.canyonbunny.objects.Tiles;
+import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
@@ -35,6 +37,8 @@ public class WorldController extends InputAdapter
 	public int lives;	//keeps track of how many lives you have left
 	public int score;	//keeps track of score in game
 
+	private Game game;
+
 	/**
 	 * initializes current level(level 1 in this case)
 	 */
@@ -48,8 +52,9 @@ public class WorldController extends InputAdapter
 	/**
 	 * WorldController Constructor
 	 */
-	public WorldController()
+	public WorldController(Game game)
 	{
+		this.game = game;
 		init();
 	}
 	/**
@@ -98,6 +103,7 @@ public class WorldController extends InputAdapter
 		handleDebugInput(deltaTime);
 		handleInputGame(deltaTime);
 		cameraHelper.update(deltaTime);
+		if (timeLeftGameOverDelay < 0) backToMenu();
 		level.update(deltaTime);
 		testCollisions();
 		if(isGameOver())
@@ -341,5 +347,11 @@ public class WorldController extends InputAdapter
 		{
 			return level.main.position.y < -5;
 		}
+		private void backToMenu()
+		{
+			//switch to menu screen
+			game.setScreen(new MenuScreen(game));
+		}
+
 
 	}
