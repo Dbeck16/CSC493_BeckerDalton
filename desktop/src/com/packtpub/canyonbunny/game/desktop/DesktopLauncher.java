@@ -34,6 +34,7 @@ public class DesktopLauncher
 			settings.debug = drawDebugOutline;//draws debug outlines in texture atlas if true
 
 			TexturePacker.process(settings, "assets-raw/images/", "../core/assets/images/", "canyonbunny.pack");
+			TexturePacker.process(settings, "assets-raw/images-ui", "../core/assets/images/", "canyonbunny-ui.pack");
 		}
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();

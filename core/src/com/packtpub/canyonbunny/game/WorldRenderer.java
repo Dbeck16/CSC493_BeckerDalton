@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 
 /**
  * Renderer for the game
@@ -164,7 +165,8 @@ public class WorldRenderer implements Disposable
 		//draw Extra lives icon and text
 		renderGuiExtraLive(batch);
 		//draw fps counter
-		renderGuiFpsCounter(batch);
+		if(GamePreferences.instance.showFpsCounter)
+			renderGuiFpsCounter(batch);
 		//draw feather power up
 		renderGuiFeatherPowerup(batch);
 		//draw game over

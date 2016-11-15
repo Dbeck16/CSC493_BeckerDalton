@@ -1,6 +1,8 @@
 package com.packtpub.libgdx.canyonbunny.objects;
 
 import com.badlogic.gdx.Gdx;
+import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.canyonbunny.game.Assets;
@@ -149,6 +151,8 @@ public class BunnyHead extends AbstractGameObject
 		{
 			batch.setColor(1.0f,0.8f,0.0f,1.0f);
 		}
+		//apply skin color
+		batch.setColor(CharacterSkin.values()[GamePreferences.instance.charSkin].getColor());
 		//draw image
 		reg = regHead;
 		batch.draw(reg.getTexture(), position.x, position.y, origin.x,

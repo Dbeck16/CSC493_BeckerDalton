@@ -21,6 +21,8 @@ import com.packtpub.libgdx.canyonbunny.objects.BunnyHead
 import com.packtpub.libgdx.canyonbunny.objects.Feather;
 import com.packtpub.libgdx.canyonbunny.objects.GoldCoin;
 import com.packtpub.libgdx.canyonbunny.objects.Rock;
+import com.badlogic.gdx.Game;
+import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
 
 /**
  *
@@ -51,8 +53,9 @@ public class WorldController extends InputAdapter
 	/**
 	 * WorldController Constructor
 	 */
-	public WorldController()
+	public WorldController(Game game)
 	{
+		this.game = game;
 		init();
 	}
 	/**
@@ -105,7 +108,7 @@ public class WorldController extends InputAdapter
 		if(isGameOver())
 		{
 			timeLeftGameOverDelay -= deltaTime;
-			if(timeLeftGameOverDelay < 0) init();
+			if(timeLeftGameOverDelay < 0) backToMenu();
 		}
 		else
 		{
@@ -184,6 +187,10 @@ public class WorldController extends InputAdapter
 		{
 			cameraHelper.setTarget(cameraHelper.hasTarget() ? null: level.bunnyHead);
 			Gdx.app.debug(TAG,  "Camera follow enabled" + cameraHelper.hasTarget());
+		}
+		else if(keycode == Keys.ESCAPE || keycode == Keys.BACK)
+		{
+			backToMenu();
 		}
 		return false;
 	}
@@ -343,6 +350,14 @@ public class WorldController extends InputAdapter
 	public boolean isPlayerInWater()
 	{
 		return level.bunnyHead.position.y < -5;
+	}
+
+	private Game game;
+
+	private void backToMenu()
+	{
+		//switch to menu screen
+		game.setScreen(new MenuScreen(game));
 	}
 
 }
