@@ -7,6 +7,7 @@ import com.packtpub.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 /**
  * Not to be confused with main function. This is our main character
  * @author Dalton
@@ -14,6 +15,7 @@ import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
  */
 public class Main extends AbstractGameObject
 {
+	public ParticleEffect dustParticles = new ParticleEffect();
 	public static final String TAG = Main.class.getName();
 	private final float JUMP_TIME_MAX = 0.6f; //max jump time
 	private final float JUMP_TIME_MIN = 0.1f; //min jump time
@@ -63,6 +65,8 @@ public class Main extends AbstractGameObject
 		 // Power-ups
 		 hasBeerPowerup = false;
 		 timeLeftBeerPowerup = 0;
+		 //particles
+		 dustParticles.load(Gdx.files.internal("../core/assets/particles/dust.pfx"), Gdx.files.internal("particles"));
 	}
 	/**
 	 * sets Main to jumping state
@@ -143,6 +147,8 @@ public class Main extends AbstractGameObject
 				}
 			}
 		}
+		dustParticles.update(deltaTime);
+
 	}
 
 	/**
@@ -152,6 +158,7 @@ public class Main extends AbstractGameObject
 	public void render(SpriteBatch batch)
 	{
 		TextureRegion reg = null;
+		dustParticles.draw(batch);
 		//apply skin color
 				batch.setColor(CharacterSkin.values()[GamePreferences.instance.charSkin].getColor());
 		//set a special color when game object has a feather powerup
@@ -180,7 +187,13 @@ public class Main extends AbstractGameObject
 		{
 		case GROUNDED:
 			jumpState = JUMP_STATE.FALLING;
+			if(velocity.x != 0)
+			{
+				dustParticles.setPosition(position.x + dimension.x/2, position.y);
+				dustParticles.start();
+			}
 			break;
+
 		case JUMP_RISING:
 			// Keep track of jump time
 			timeJumping += deltaTime;
@@ -204,6 +217,10 @@ public class Main extends AbstractGameObject
 			}
 		}
 		if (jumpState != JUMP_STATE.GROUNDED)
+		{
+			dustParticles.allowCompletion();
 			super.updateMotionY(deltaTime);
+
+		}
 	}
 }
