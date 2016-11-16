@@ -83,9 +83,19 @@ public class Clouds extends AbstractGameObject
 		pos.y += 1.75; //base position
 		pos.y += MathUtils.random(0.0f, 0.2f) * (MathUtils.randomBoolean() ? 1 : -1); //random additional position
 		cloud.position.set(pos);
+		//speed
+		Vector2 speed = new Vector2();
+		speed.x += 0.5f;
+		//random additional spped
+		speed.x += MathUtils.random(0.0f, 0.75f);
+		cloud.terminalVelocity.set(speed);
+		speed.x *= -1;
+		cloud.velocity.set(speed);
 		return cloud;
 	}
-
+	/**
+	 * Render method for clouds
+	 */
 	@Override
 	public void render(SpriteBatch batch)
 	{
@@ -94,5 +104,21 @@ public class Clouds extends AbstractGameObject
 			cloud.render(batch);
 		}
 	}
+
+	@Override
+	public void update(float deltaTime)
+	{
+		for (int i = clouds.size - 1; i>=0; i--)
+		{
+			Cloud cloud = clouds.get(i);
+			cloud.update(deltaTime);
+			if(cloud.position.x<-10)
+			{
+				clouds.removeIndex(i);
+				clouds.add(spawnCloud());
+			}
+		}
+	}
+
 
 }

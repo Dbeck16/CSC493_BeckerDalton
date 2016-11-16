@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class CameraHelper
 {
+	private final float FOLLOW_SPEED =  4.0f;
 	private static final String TAG = CameraHelper.class.getName();
 	private final float MAX_ZOOM_IN = 0.25f; //max zoom in
 	private final float MAX_ZOOM_OUT = 10.0f; //max zoom out
@@ -40,8 +41,9 @@ public class CameraHelper
 	{
 		if (!hasTarget()) return;
 
-		position.x = target.position.x + target.origin.x;
-		position.y = target.position.y + target.origin.y;
+		position.lerp(target.position, FOLLOW_SPEED * deltaTime);
+	//	position.x = target.position.x + target.origin.x;
+	//	position.y = target.position.y + target.origin.y;
 
 		position.y = Math.max(-1f, position.y);
 	}

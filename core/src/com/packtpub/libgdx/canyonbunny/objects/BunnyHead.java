@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.packtpub.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+
+
 
 public class BunnyHead extends AbstractGameObject
 {
+	public ParticleEffect dustParticles = new ParticleEffect();
 	public static final String TAG = BunnyHead.class.getName();
 	private final float JUMP_TIME_MAX = 0.3f; //max jump time
 	private final float JUMP_TIME_MIN = 0.1f; //min jump time
@@ -59,6 +63,10 @@ public class BunnyHead extends AbstractGameObject
 		 // Power-ups
 		 hasFeatherPowerup = false;
 		 timeLeftFeatherPowerup = 0;
+
+		 //Particles
+		 dustParticles.load(Gdx.files.internal("../core/assets/particles/dust.pfx"), Gdx.files.internal("particles"));
+
 	}
 	/**
 	 * sets bunnyHead to jumping state
@@ -137,6 +145,7 @@ public class BunnyHead extends AbstractGameObject
 				}
 			}
 		}
+		dustParticles.update(deltaTime);
 	}
 
 	/**
@@ -146,13 +155,15 @@ public class BunnyHead extends AbstractGameObject
 	public void render(SpriteBatch batch)
 	{
 		TextureRegion reg = null;
+
+		dustParticles.draw(batch);
+		//apply skin color
+		batch.setColor(CharacterSkin.values()[GamePreferences.instance.charSkin].getColor());
 		//set a special color when game object has a feather powerup
 		if (hasFeatherPowerup)
 		{
 			batch.setColor(1.0f,0.8f,0.0f,1.0f);
 		}
-		//apply skin color
-		batch.setColor(CharacterSkin.values()[GamePreferences.instance.charSkin].getColor());
 		//draw image
 		reg = regHead;
 		batch.draw(reg.getTexture(), position.x, position.y, origin.x,
@@ -174,6 +185,11 @@ public class BunnyHead extends AbstractGameObject
 		{
 		case GROUNDED:
 			jumpState = JUMP_STATE.FALLING;
+			if(velocity.x != 0)
+			{
+				dustParticles.setPosition(position.x + dimension.x/2, position.y);
+				dustParticles.start();
+			}
 			break;
 		case JUMP_RISING:
 			// Keep track of jump time
@@ -197,7 +213,9 @@ public class BunnyHead extends AbstractGameObject
 				velocity.y = terminalVelocity.y;
 			}
 		}
-		if (jumpState != JUMP_STATE.GROUNDED)
+		if (jumpState != JUMP_STATE.GROUNDED){
 			super.updateMotionY(deltaTime);
+			dustParticles.allowCompletion();
+		}
 	}
 }

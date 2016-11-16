@@ -36,6 +36,8 @@ public class WorldController extends InputAdapter
 
 	public CameraHelper cameraHelper; //creates a camera helper class
 
+	public float scoreVisual;
+	public float livesVisual;
 	public Level level;	//keeps track of what level
 	public int lives;	//keeps track of how many lives you have left
 	public int score;	//keeps track of score in game
@@ -46,6 +48,7 @@ public class WorldController extends InputAdapter
 	private void initLevel()
 	{
 		score = 0;
+		scoreVisual = score;
 		level = new Level(Constants.LEVEL_01);
 		cameraHelper.setTarget(level.bunnyHead);
 	}
@@ -67,6 +70,7 @@ public class WorldController extends InputAdapter
 		cameraHelper = new CameraHelper();
 		lives = Constants.LIVES_START;
 		initLevel();
+		livesVisual = lives;
 		timeLeftGameOverDelay = 0;
 	}
 
@@ -125,6 +129,13 @@ public class WorldController extends InputAdapter
 			{
 				initLevel();
 			}
+		}
+		level.mountains.updateScrollPosition(cameraHelper.getPosition());
+		if (livesVisual > lives)
+			livesVisual = Math.max(lives,  livesVisual - 1 * deltaTime);
+		if (scoreVisual < score)
+		{
+			scoreVisual = Math.min(score, scoreVisual + 250 * deltaTime);
 		}
 	}
 	/**
