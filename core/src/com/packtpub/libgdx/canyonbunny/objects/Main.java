@@ -3,7 +3,9 @@ package com.packtpub.libgdx.canyonbunny.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.packtpub.canyonbunny.game.Assets;
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
@@ -79,6 +81,7 @@ public class Main extends AbstractGameObject
 			case GROUNDED: // Character is standing on a platform
 				if (jumpKeyPressed)
 				{
+					AudioManager.instance.play(Assets.instance.sounds.jump);
 					// Start counting jump time from the beginning
 					timeJumping = 0;
 					jumpState = JUMP_STATE.JUMP_RISING;
@@ -92,6 +95,9 @@ public class Main extends AbstractGameObject
 				case JUMP_FALLING: // Falling down after jump
 					if (jumpKeyPressed && hasBeerPowerup)
 					{
+						AudioManager.instance.play(
+								Assets.instance.sounds.jumpWithFeather, 1,
+								MathUtils.random(1.0f, 1.1f));
 						 timeJumping = JUMP_TIME_OFFSET_FLYING;
 						 jumpState = JUMP_STATE.JUMP_RISING;
 					}
