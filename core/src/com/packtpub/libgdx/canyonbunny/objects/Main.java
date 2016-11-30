@@ -66,7 +66,7 @@ public class Main extends AbstractGameObject
 		 hasBeerPowerup = false;
 		 timeLeftBeerPowerup = 0;
 		 //particles
-		 dustParticles.load(Gdx.files.internal("../core/assets/particles/dust.pfx"), Gdx.files.internal("particles"));
+		 dustParticles.load(Gdx.files.internal("../core/assets/particles/dust.pfx"), Gdx.files.internal("../core/assets/particles"));
 	}
 	/**
 	 * sets Main to jumping state
