@@ -17,6 +17,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
 import com.packtpub.libgdx.canyonbunny.objects.Tiles;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
@@ -117,6 +118,7 @@ public class WorldController extends InputAdapter
 		}
 		if(!isGameOver() && isPlayerInWater())
 		{
+			AudioManager.instance.play(Assets.instance.sounds.liveLost);
 			lives--;
 			if(isGameOver())
 			{
@@ -238,6 +240,7 @@ public class WorldController extends InputAdapter
 		 */
 		private void onCollisionMainWithDiploma(Diploma diploma)
 		{
+			AudioManager.instance.play(Assets.instance.sounds.pickupCoin);
 			diploma.collected = true;
 			score+= diploma.getScore();
 			Gdx.app.log(TAG,  "Diploma collect");
@@ -249,6 +252,7 @@ public class WorldController extends InputAdapter
 		 */
 		private void onCollisionMainWithBeer(Beer beer)
 		{
+			AudioManager.instance.play(Assets.instance.sounds.pickupFeather);
 			beer.collected = true;
 			score+= beer.getScore();
 			level.main.setBeerPowerup(true);

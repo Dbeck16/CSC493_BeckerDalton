@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+
 /**
  * Assets manager for keeping tracks of textures.
  * @author Dalton
@@ -39,6 +42,9 @@ public class Assets implements Disposable, AssetErrorListener
 	public AssetTiles tile;
 	public AssetBeer beer;
 	public AssetScroll scroll;
+	public AssetSounds sounds; //sounds assets.
+	public AssetMusic music; //music assets
+
 
 	//initializes the asset manager for this class
 	public void init(AssetManager assetManager)
@@ -49,6 +55,15 @@ public class Assets implements Disposable, AssetErrorListener
 
 		// load texture atlas
 		assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
+		// load sounds
+		assetManager.load("../core/assets/sounds/jump.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/jump_with_feather.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/pickup_coin.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/pickup_feather.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/live_lost.wav", Sound.class);
+
+		// load music
+		assetManager.load("../core/assets/music/keith303_-_brand_new_highscore.mp3", Music.class);
 
 		// start loading assets and wait until finished
 		assetManager.finishLoading();
@@ -74,6 +89,9 @@ public class Assets implements Disposable, AssetErrorListener
 		scroll = new AssetScroll(atlas);
 		levelDecoration = new AssetLevelDecoration(atlas);
 		fonts = new AssetFonts();
+		sounds = new AssetSounds(assetManager);
+		music = new AssetMusic(assetManager);
+
 	}
 
 
@@ -179,4 +197,40 @@ public class Assets implements Disposable, AssetErrorListener
 			}
 
 	}
+	/**
+	 * sub class for handling game sounds
+	 * @author Dalton
+	 *
+	 */
+	public class AssetSounds
+	{
+		public final Sound jump;
+		public final Sound jumpWithFeather;
+		public final Sound pickupCoin;
+		public final Sound pickupFeather;
+		public final Sound liveLost;
+		public AssetSounds (AssetManager am)
+		{
+			jump = am.get("../core/assets/sounds/jump.wav", Sound.class);
+			jumpWithFeather = am.get("../core/assets/sounds/jump_with_feather.wav",Sound.class);
+			pickupCoin = am.get("../core/assets/sounds/pickup_coin.wav", Sound.class);
+			pickupFeather = am.get("../core/assets/sounds/pickup_feather.wav",Sound.class);
+			liveLost = am.get("../core/assets/sounds/live_lost.wav", Sound.class);
+		}
+	}
+
+	/**
+	 * sub class for handling music
+	 * @author Dalton
+	 *
+	 */
+	public class AssetMusic
+	{
+		public final Music song01;
+		public AssetMusic (AssetManager am)
+		{
+			song01 = am.get("../core/assets/music/keith303_-_brand_new_highscore.mp3",	Music.class);
+		}
+	}
+
 }
