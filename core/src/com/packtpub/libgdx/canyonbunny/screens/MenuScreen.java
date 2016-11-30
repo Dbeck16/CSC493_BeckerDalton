@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.packtpub.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 
@@ -93,7 +94,7 @@ public class MenuScreen extends AbstractGameScreen
 		stage.act(deltaTime);
 		stage.draw();
 	}
-	
+
 	/**
 	 * resize function for menu
 	 */
@@ -251,7 +252,7 @@ public class MenuScreen extends AbstractGameScreen
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private Table buildBackGroundLayer ()
@@ -296,7 +297,7 @@ public class MenuScreen extends AbstractGameScreen
 		btnMenuOptions.setVisible(false);
 		winOptions.setVisible(true);
 	}
-	
+
 	private Skin skinLibgdx;
 
 	/**
@@ -332,7 +333,7 @@ public class MenuScreen extends AbstractGameScreen
 		prefs.showFpsCounter = chkShowFpsCounter.isChecked();
 		prefs.save();
 	}
-	
+
 	/**
 	 * Used for changing the color of the skin
 	 * @param index
@@ -349,6 +350,7 @@ public class MenuScreen extends AbstractGameScreen
 	{
 		saveSettings();
 		onCancelClicked();
+		AudioManager.instance.onSettingsUpdated();
 	}
 	/**
 	 * determines what happens cancel button is clickd
@@ -358,10 +360,11 @@ public class MenuScreen extends AbstractGameScreen
 		btnMenuPlay.setVisible(true);
 		btnMenuOptions.setVisible(true);
 		winOptions.setVisible(false);
+		AudioManager.instance.onSettingsUpdated();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private Table buildOptWinAudioSettings()

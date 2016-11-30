@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+
 
 /**
  * Assets manager for keeping tracks of textures.
@@ -33,6 +36,10 @@ public class Assets implements Disposable, AssetErrorListener
 	private Assets(){}
 
 
+	public AssetSounds sounds; //sounds assets.
+	public AssetMusic music; //music assets
+
+
 
 	public AssetFonts fonts;
 
@@ -51,6 +58,15 @@ public class Assets implements Disposable, AssetErrorListener
 
 		// load texture atlas
 		assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
+		// load sounds
+		assetManager.load("../core/assets/sounds/jump.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/jump_with_feather.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/pickup_coin.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/pickup_feather.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/live_lost.wav", Sound.class);
+
+		// load music
+		assetManager.load("../core/assets/music/keith303_-_brand_new_highscore.mp3", Music.class);
 
 		// start loading assets and wait until finished
 		assetManager.finishLoading();
@@ -69,6 +85,7 @@ public class Assets implements Disposable, AssetErrorListener
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
 
+
 		//create the game resource objects.
 		fonts = new AssetFonts();
 		bunny = new AssetBunny(atlas);
@@ -76,6 +93,8 @@ public class Assets implements Disposable, AssetErrorListener
 		goldCoin = new AssetGoldCoin(atlas);
 		feather = new AssetFeather(atlas);
 		levelDecoration = new AssetLevelDecoration(atlas);
+		sounds = new AssetSounds(assetManager);
+		music = new AssetMusic(assetManager);
 	}
 
 
@@ -147,7 +166,7 @@ public class Assets implements Disposable, AssetErrorListener
 			 feather = atlas.findRegion("item_feather");
 		 }
 	}
-	
+
 	/**
 	 * Handles all of our fonts assets
 	 * @author Dalton
@@ -164,11 +183,11 @@ public class Assets implements Disposable, AssetErrorListener
 		{
 		// create three fonts using Libgdx's 15px bitmap font
 			defaultSmall = new BitmapFont(
-				Gdx.files.internal("images/arial-15.fnt"), true);
+				Gdx.files.internal("../core/assets/images/arial-15.fnt"), true);
 			defaultNormal = new BitmapFont(
-				Gdx.files.internal("images/arial-15.fnt"), true);
+				Gdx.files.internal("../core/assets/images/arial-15.fnt"), true);
 			defaultBig = new BitmapFont(
-				Gdx.files.internal("images/arial-15.fnt"), true);
+				Gdx.files.internal("../core/assets/images/arial-15.fnt"), true);
 
 			// set font sizes
 
@@ -204,5 +223,41 @@ public class Assets implements Disposable, AssetErrorListener
 			 mountainRight = atlas.findRegion("mountain_right");
 			 waterOverlay = atlas.findRegion("water_overlay");
 		 }
+	}
+
+	/**
+	 * sub class for handling game sounds
+	 * @author Dalton
+	 *
+	 */
+	public class AssetSounds
+	{
+		public final Sound jump;
+		public final Sound jumpWithFeather;
+		public final Sound pickupCoin;
+		public final Sound pickupFeather;
+		public final Sound liveLost;
+		public AssetSounds (AssetManager am)
+		{
+			jump = am.get("../core/assets/sounds/jump.wav", Sound.class);
+			jumpWithFeather = am.get("../core/assets/sounds/jump_with_feather.wav",Sound.class);
+			pickupCoin = am.get("../core/assets/sounds/pickup_coin.wav", Sound.class);
+			pickupFeather = am.get("../core/assets/sounds/pickup_feather.wav",Sound.class);
+			liveLost = am.get("../core/assets/sounds/live_lost.wav", Sound.class);
+		}
+	}
+
+	/**
+	 * sub class for handling music
+	 * @author Dalton
+	 *
+	 */
+	public class AssetMusic
+	{
+		public final Music song01;
+		public AssetMusic (AssetManager am)
+		{
+			song01 = am.get("../core/assets/music/keith303_-_brand_new_highscore.mp3",	Music.class);
+		}
 	}
 }

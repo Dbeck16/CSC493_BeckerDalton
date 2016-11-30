@@ -11,6 +11,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
 import com.packtpub.libgdx.canyonbunny.objects.Rock;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
@@ -23,7 +24,7 @@ import com.packtpub.libgdx.canyonbunny.objects.GoldCoin;
 import com.packtpub.libgdx.canyonbunny.objects.Rock;
 import com.badlogic.gdx.Game;
 import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
-
+import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 /**
  *
  * @author Dalton Becker
@@ -120,6 +121,7 @@ public class WorldController extends InputAdapter
 		}
 		if(!isGameOver() && isPlayerInWater())
 		{
+			AudioManager.instance.play(Assets.instance.sounds.liveLost);
 			lives--;
 			if(isGameOver())
 			{
@@ -254,6 +256,7 @@ public class WorldController extends InputAdapter
 	private void onCollisionBunnyWithGoldCoin(GoldCoin goldcoin)
 	{
 		goldcoin.collected = true;
+		AudioManager.instance.play(Assets.instance.sounds.pickupCoin);
 		score+= goldcoin.getScore();
 		Gdx.app.log(TAG,  "Gold coin collect");
 	}
@@ -265,6 +268,7 @@ public class WorldController extends InputAdapter
 	private void onCollisionBunnyWithFeather(Feather feather)
 	{
 		feather.collected = true;
+		AudioManager.instance.play(Assets.instance.sounds.pickupFeather);
 		score+= feather.getScore();
 		level.bunnyHead.setFeatherPowerup(true);
 		Gdx.app.log(TAG, "Feather Collected");
