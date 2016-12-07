@@ -3,7 +3,7 @@ package com.packtpub.libgdx.canyonbunny.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.packtpub.canyonbunny.game.Assets;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 /**
  * Abstract game screen for our game
  * @author Dalton

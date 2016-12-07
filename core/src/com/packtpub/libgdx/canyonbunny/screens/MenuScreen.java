@@ -22,8 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.packtpub.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
@@ -63,6 +63,8 @@ public class MenuScreen extends AbstractGameScreen
 	private final float DEBUG_REBUILD_INTERVAL = 5.0f;
 	private boolean debugEnabled = false;
 	private float debugRebuildStage;
+
+	private CheckBox chkUseMonoChromeShader;
 
 	/**
 	 * menu screen constructor
@@ -317,6 +319,7 @@ public class MenuScreen extends AbstractGameScreen
 		selCharSkin.setSelectedIndex(prefs.charSkin);
 		onCharSkinSelected(prefs.charSkin);
 		chkShowFpsCounter.setChecked(prefs.showFpsCounter);
+		chkUseMonoChromeShader.setChecked(prefs.useMonochromeShader);
 	}
 
 	/**
@@ -331,6 +334,7 @@ public class MenuScreen extends AbstractGameScreen
 		prefs.volMusic = sldMusic.getValue();
 		prefs.charSkin = selCharSkin.getSelectedIndex();
 		prefs.showFpsCounter = chkShowFpsCounter.isChecked();
+		prefs.useMonochromeShader = chkUseMonoChromeShader.isChecked();
 		prefs.save();
 	}
 
@@ -431,6 +435,12 @@ public class MenuScreen extends AbstractGameScreen
 		chkShowFpsCounter = new CheckBox("", skinLibgdx);
 		tbl.add(new Label("Show FPS Counter", skinLibgdx));
 		tbl.add(chkShowFpsCounter);
+		tbl.row();
+
+		// + Checkbox, "Use Monochrome Shader" label
+		chkUseMonoChromeShader = new CheckBox("", skinLibgdx);
+		tbl.add(new Label("Use Monochrome Shader", skinLibgdx));
+		tbl.add(chkUseMonoChromeShader);
 		tbl.row();
 		return tbl;
 	}

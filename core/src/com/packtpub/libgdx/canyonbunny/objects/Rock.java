@@ -2,9 +2,9 @@ package com.packtpub.libgdx.canyonbunny.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.packtpub.canyonbunny.game.Assets;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 
 public class Rock extends AbstractGameObject
 {
@@ -112,6 +112,10 @@ public class Rock extends AbstractGameObject
 			floatCycleTimeLeft = FLOAT_CYCLE_TIME;
 			floatingDownwards = !floatingDownwards;
 			floatTargetPosition.y += FLOAT_AMPLITUDE * (floatingDownwards ? -1 : 1);
+		}
+		else
+		{
+			body.setLinearVelocity(body.getLinearVelocity().scl(0.98f));
 		}
 		position.lerp(floatTargetPosition, deltaTime);
 	}

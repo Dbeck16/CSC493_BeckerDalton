@@ -41,4 +41,27 @@ public class Constants
 	public static final String SKIN_CANYONBUNNY_UI = "../core/assets/images/canyonbunny-ui.json";
 	//locations of the preferences file
 	public static final String PREFERENCES = "../core/assets/preferences.java";
+
+	// Number of carrots to spawn
+	public static final int CARROTS_SPAWN_MAX = 100;
+
+	// Spawn radius for carrots
+	public static final float CARROTS_SPAWN_RADIUS = 3.5f;
+
+	// Delay after game finished
+	public static final float TIME_DELAY_GAME_FINISHED = 6;
+
+	// Shader
+	public static final String shaderMonochromeVertex =
+	"../core/assets/shaders/monochrome.vs";
+
+	public static final String shaderMonochromeFragment =
+	"../core/assets/shaders/monochrome.fs";
+
+	// Angle of rotation for dead zone (no movement)
+	public static final float ACCEL_ANGLE_DEAD_ZONE = 5.0f;
+
+	// Max angle of rotation needed to gain max movement velocity
+	public static final float ACCEL_MAX_ANGLE_MAX_MOVEMENT = 20.0f;
+
 }

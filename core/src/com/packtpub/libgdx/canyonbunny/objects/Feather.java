@@ -2,7 +2,7 @@ package com.packtpub.libgdx.canyonbunny.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.packtpub.canyonbunny.game.Assets;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 /**
  * Feather class
  * @author Dalton

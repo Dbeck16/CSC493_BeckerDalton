@@ -1,4 +1,4 @@
-package com.packtpub.canyonbunny.game;
+package com.packtpub.libgdx.canyonbunny.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +11,8 @@ import com.packtpub.libgdx.canyonbunny.objects.WaterOverlay;
 import com.packtpub.libgdx.canyonbunny.objects.BunnyHead;
 import com.packtpub.libgdx.canyonbunny.objects.Feather;
 import com.packtpub.libgdx.canyonbunny.objects.GoldCoin;
+import com.packtpub.libgdx.canyonbunny.objects.Carrot;
+import com.packtpub.libgdx.canyonbunny.objects.Goal;
 
 /**
  *
@@ -24,6 +26,8 @@ public class Level
 	public BunnyHead bunnyHead;
 	public Array<GoldCoin> goldCoins;
 	public Array<Feather> feathers;
+	public Array<Carrot> carrots;
+	public Goal goal;
 
 
 	/**
@@ -45,6 +49,9 @@ public class Level
 
 			feather.update(deltaTime);
 
+		for(Carrot carrot : carrots)
+			carrot.update(deltaTime);
+
 		clouds.update(deltaTime);
 	}
 
@@ -59,7 +66,8 @@ public class Level
 		ROCK(0, 255, 0), //green
 		PLAYER_SPAWNPOINT(255, 255, 255), //white
 		ITEM_FEATHER(255, 0, 255), // purple
-		ITEM_GOLD_COIN(255, 255, 0); // yellow
+		ITEM_GOLD_COIN(255, 255, 0), // yellow
+		GOAL(255, 0, 0); //rojo
 
 		private int color;
 
@@ -114,6 +122,7 @@ public class Level
 		rocks = new Array<Rock>(); //array for holding all of the rocks
 		goldCoins = new Array<GoldCoin> ();
 		feathers = new Array<Feather>();
+		carrots = new Array<Carrot>();
 
 
 
@@ -182,6 +191,16 @@ public class Level
 							+ offsetHeight);
 					goldCoins.add((GoldCoin)obj);
 				}
+				//goal
+				// goal
+
+				else if (BLOCK_TYPE.GOAL.sameColor(currentPixel))
+				{
+					obj = new Goal();
+					offsetHeight = -7.0f;
+					obj.position.set(pixelX, baseHeight + offsetHeight);
+					goal = (Goal)obj;
+				}
 				else
 				{
 					int r = 0xff & (currentPixel >>> 24); //red color channel
@@ -215,6 +234,9 @@ public class Level
 		//Draw Mountains
 		mountains.render(batch);
 
+		// Draw Goal
+		goal.render(batch);
+
 		//Draw Rocks
 		for(Rock rock : rocks)
 			rock.render(batch);
@@ -237,6 +259,9 @@ public class Level
 		{
 			feather.render(batch);
 		}
+		// Draw Carrots
+		for (Carrot carrot : carrots)
+			carrot.render(batch);
 	}
 
 }
