@@ -382,7 +382,7 @@ public class WorldController extends InputAdapter implements Disposable
 		{
 			if (b2world != null) b2world.dispose();
 			b2world = new World(new Vector2(0, -9.81f), true);
-			//b2world.setContactListener(new CollisionHandler(this));
+			b2world.setContactListener(new CollisionHandler(this));
 
 			// Rocks
 			Vector2 origin = new Vector2();
@@ -404,7 +404,7 @@ public class WorldController extends InputAdapter implements Disposable
 				body.createFixture(fixtureDef);
 				polygonShape.dispose();
 			}
-
+			/*
 			Main player = level.main;
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.position.set(player.position);
@@ -426,7 +426,7 @@ public class WorldController extends InputAdapter implements Disposable
 			fixtureDef.friction = 1.0f;
 			body.createFixture(fixtureDef);
 			polygonShape.dispose();
-
+	*/
 		}
 
 		@Override

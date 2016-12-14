@@ -54,7 +54,7 @@ public class Main extends AbstractGameObject
 		 // Center image on game object
 		 origin.set(dimension.x / 2, dimension.y / 2);
 		 // Bounding box for collision detection
-		 bounds.set(0, 0, dimension.x, dimension.y);
+		 bounds.set(0, 0, dimension.x/2, dimension.y);
 		 // Set physics values
 		 terminalVelocity.set(3.0f, 4.0f);
 		 friction.set(12.0f, 0.0f);
