@@ -34,6 +34,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.FrictionJointDef;
 import com.packtpub.libgdx.canyonbunny.objects.Carrot;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.Input.Peripheral;
@@ -449,6 +450,7 @@ public class WorldController extends InputAdapter implements Disposable
 				rock.bounds.height / 2.0f, origin, 0);
 			FixtureDef fixtureDef = new FixtureDef();
 			fixtureDef.shape = polygonShape;
+			fixtureDef.friction = 1.0f;
 			body.createFixture(fixtureDef);
 			polygonShape.dispose();
 		}
