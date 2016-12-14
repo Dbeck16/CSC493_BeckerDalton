@@ -1,10 +1,10 @@
-package com.packtpub.canyonbunny.game;
+package com.packtpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.packtpub.canyonbunny.game.Assets;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.Game;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
 import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
@@ -22,6 +22,7 @@ public class CanyonBunnyMain extends Game
 	private WorldController worldController; //instance of a worldController
 	private WorldRenderer worldRenderer;	//instance of a worldrenderer
 	private boolean paused;	//keeps track of whether or not the game is paused
+	private MenuScreen menu = new MenuScreen(this);
 
 	//Creates the board controllers and all other instances
 	@Override
@@ -39,7 +40,7 @@ public class CanyonBunnyMain extends Game
 
 
 		//start game at menu screen
-		setScreen(new MenuScreen(this));
+		setScreen(menu);
 
 	}
 

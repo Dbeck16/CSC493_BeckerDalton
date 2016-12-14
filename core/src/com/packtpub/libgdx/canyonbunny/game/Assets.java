@@ -1,4 +1,4 @@
-package com.packtpub.canyonbunny.game;
+package com.packtpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;

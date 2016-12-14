@@ -22,10 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.packtpub.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 /**
  * Menu screen for the game

@@ -1,4 +1,4 @@
-package com.packtpub.canyonbunny.game;
+package com.packtpub.libgdx.canyonbunny.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,6 +8,7 @@ import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 /**
  * Renderer for the game
@@ -20,6 +21,8 @@ public class WorldRenderer implements Disposable
 	private SpriteBatch batch; //Used for creating our sprites
 	private WorldController worldController;	//instance of world controller
 	private OrthographicCamera cameraGUI;	//Orthograpic camera for GUI.
+	private static final boolean DEBUG_DRAW_BOX2D_WORLD = true;
+	private Box2DDebugRenderer b2debugRenderer;
 
 	/**
 	 * Constructor for WorldRenderer
@@ -40,11 +43,14 @@ public class WorldRenderer implements Disposable
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);
+
 		camera.update();
 		cameraGUI = new OrthographicCamera(Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_WIDTH);
 		cameraGUI.position.set(0,0,0);
 		cameraGUI.setToOrtho(true); //flip y-axis
 		cameraGUI.update();
+
+		b2debugRenderer = new Box2DDebugRenderer();
 	}
 
 	/**
@@ -82,6 +88,11 @@ public class WorldRenderer implements Disposable
 		batch.begin();
 		worldController.level.render(batch);
 		batch.end();
+		if (DEBUG_DRAW_BOX2D_WORLD)
+		{
+			b2debugRenderer.render(worldController.b2world,
+			camera.combined);
+		}
 	}
 
 

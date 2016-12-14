@@ -1,11 +1,11 @@
 package com.packtpub.libgdx.canyonbunny.screens;
 
 import com.badlogic.gdx.Game;
+import com.packtpub.libgdx.canyonbunny.game.WorldController;
+import com.packtpub.libgdx.canyonbunny.game.WorldRenderer;
 import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.packtpub.canyonbunny.game.WorldController;
-import com.packtpub.canyonbunny.game.WorldRenderer;
 /**
  * Handles most of the game using controller and renderer
  * @author Dalton
@@ -91,6 +91,7 @@ public class GameScreen extends AbstractGameScreen
 	@Override
 	public void hide()
 	{
+		worldController.dispose();
 		worldRenderer.dispose();
 		Gdx.input.setCatchBackKey(false);
 	}

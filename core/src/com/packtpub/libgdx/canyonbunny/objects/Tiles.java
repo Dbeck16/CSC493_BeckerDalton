@@ -2,9 +2,9 @@ package com.packtpub.libgdx.canyonbunny.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.packtpub.canyonbunny.game.Assets;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 
 
 /**

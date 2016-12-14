@@ -3,8 +3,8 @@ package com.packtpub.canyonbunny.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
+import com.packtpub.libgdx.canyonbunny.game.CanyonBunnyMain;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.packtpub.canyonbunny.game.CanyonBunnyMain;
 
 /**
  * The starter class for the game.

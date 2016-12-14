@@ -1,8 +1,10 @@
-package com.packtpub.canyonbunny.game;
+package com.packtpub.libgdx.canyonbunny.game;
+
 import com.badlogic.gdx.graphics.Pixmap;import com.badlogic.gdx.math.Rectangle;
 import com.packtpub.libgdx.canyonbunny.objects.Main;
 import com.packtpub.libgdx.canyonbunny.objects.Main.JUMP_STATE;
 import com.packtpub.libgdx.canyonbunny.objects.Diploma;
+import com.packtpub.libgdx.canyonbunny.objects.AbstractGameObject;
 import com.packtpub.libgdx.canyonbunny.objects.Beer;
 import com.packtpub.libgdx.canyonbunny.objects.Tiles;
 import com.packtpub.libgdx.canyonbunny.screens.MenuScreen;
@@ -17,10 +19,20 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
+import com.packtpub.libgdx.canyonbunny.util.CollisionHandler;
 import com.packtpub.libgdx.canyonbunny.objects.Tiles;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 /**
  *
@@ -28,7 +40,7 @@ import com.packtpub.libgdx.canyonbunny.util.Constants;
  *
  */
 
-public class WorldController extends InputAdapter
+public class WorldController extends InputAdapter implements Disposable
 {
 	private static final String TAG = WorldController.class.getName(); //Tag to print in console for WorldController
 
@@ -37,6 +49,9 @@ public class WorldController extends InputAdapter
 	public Level level;	//keeps track of what level
 	public int lives;	//keeps track of how many lives you have left
 	public int score;	//keeps track of score in game
+	public Array<AbstractGameObject> objectsToRemove;
+
+	public World b2world;
 
 	private Game game;
 
@@ -48,6 +63,7 @@ public class WorldController extends InputAdapter
 		score = 0;
 		level = new Level(Constants.LEVEL_01);
 		cameraHelper.setTarget(level.main);
+		initPhysics();
 	}
 
 	/**
@@ -63,6 +79,7 @@ public class WorldController extends InputAdapter
 	 */
 	private void init()
 	{
+		objectsToRemove = new Array<AbstractGameObject>();
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
 		lives = Constants.LIVES_START;
@@ -107,10 +124,14 @@ public class WorldController extends InputAdapter
 		if (timeLeftGameOverDelay < 0) backToMenu();
 		level.update(deltaTime);
 		testCollisions();
+		b2world.step(deltaTime, 8, 3);
 		if(isGameOver())
 		{
 			timeLeftGameOverDelay -= deltaTime;
-			if(timeLeftGameOverDelay < 0) init();
+			if(timeLeftGameOverDelay < 0)
+			{
+				backToMenu();
+			}
 		}
 		else
 		{
@@ -355,6 +376,68 @@ public class WorldController extends InputAdapter
 		{
 			//switch to menu screen
 			game.setScreen(new MenuScreen(game));
+			dispose();
+		}
+		private void initPhysics ()
+		{
+			if (b2world != null) b2world.dispose();
+			b2world = new World(new Vector2(0, -9.81f), true);
+			//b2world.setContactListener(new CollisionHandler(this));
+
+			// Rocks
+			Vector2 origin = new Vector2();
+
+			for (Tiles rock : level.tiles)
+			{
+				BodyDef bodyDef = new BodyDef();
+				bodyDef.type = BodyType.KinematicBody;
+				bodyDef.position.set(rock.position);
+				Body body = b2world.createBody(bodyDef);
+				rock.body = body;
+				PolygonShape polygonShape = new PolygonShape();
+				origin.x = rock.bounds.width / 2.0f;
+				origin.y = rock.bounds.height / 2.0f;
+				polygonShape.setAsBox(rock.bounds.width / 2.0f,
+					rock.bounds.height / 2.0f, origin, 0);
+				FixtureDef fixtureDef = new FixtureDef();
+				fixtureDef.shape = polygonShape;
+				body.createFixture(fixtureDef);
+				polygonShape.dispose();
+			}
+
+			Main player = level.main;
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.position.set(player.position);
+			bodyDef.fixedRotation = true;
+
+			Body body = b2world.createBody(bodyDef);
+			body.setType(BodyType.DynamicBody);
+			body.setGravityScale(1.0f);
+			body.setUserData(player);
+			player.body = body;
+
+			PolygonShape polygonShape = new PolygonShape();
+			origin.x = (player.bounds.width) / 2.0f;
+			origin.y = (player.bounds.height) / 2.0f;
+			polygonShape.setAsBox((player.bounds.width-0.7f) / 2.0f, (player.bounds.height-0.15f) / 2.0f, origin, 0);
+
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = polygonShape;
+			fixtureDef.friction = 1.0f;
+			body.createFixture(fixtureDef);
+			polygonShape.dispose();
+
+		}
+
+		@Override
+		public void dispose()
+		{
+			if (b2world != null) b2world.dispose();
+		}
+
+		public void flagForRemoval(AbstractGameObject obj)
+		{
+			objectsToRemove.add(obj);
 		}
 
 

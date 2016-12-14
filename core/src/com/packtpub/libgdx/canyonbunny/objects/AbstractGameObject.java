@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.Body;
 
 
 public abstract class AbstractGameObject
@@ -18,6 +19,7 @@ public abstract class AbstractGameObject
     public Vector2 origin;
     public Vector2 scale;
     public float rotation;
+    public Body body;
     /**
      * abstract class for all game objects
      */
@@ -41,10 +43,21 @@ public abstract class AbstractGameObject
      */
     public void update(float deltaTime)
     {
-    	updateMotionX(deltaTime);
-    	updateMotionY(deltaTime);
-    	position.x += velocity.x * deltaTime;
-    	position.y += velocity.y * deltaTime;
+    	if(body == null)
+    	{
+
+    		updateMotionX(deltaTime);
+    		updateMotionY(deltaTime);
+
+    		position.x += velocity.x * deltaTime;
+    		position.y += velocity.y * deltaTime;
+    	}
+    	else
+    	{
+    		position.set(body.getPosition());
+    		rotation = body.getAngle() * MathUtils.radiansToDegrees;
+    	}
+
     }
     /**
      * Renders images
@@ -62,7 +75,7 @@ public abstract class AbstractGameObject
     		//apply friction
     		if(velocity.x > 0 )
     		{
-    			Math.max(velocity.x - friction.x * deltaTime, 0);
+    			velocity.x = Math.max(velocity.x - friction.x * deltaTime, 0);
     		}
     		else
     		{
@@ -73,8 +86,7 @@ public abstract class AbstractGameObject
     	 velocity.x += acceleration.x * deltaTime;
     	 // Make sure the object's velocity does not exceed the
     	 // positive or negative terminal velocity
-    	 velocity.x = MathUtils.clamp(velocity.x,
-    	 -terminalVelocity.x, terminalVelocity.x);
+    	 velocity.x = MathUtils.clamp(velocity.x, -terminalVelocity.x, terminalVelocity.x);
     }
     /**
      * updates how we move vertically
@@ -99,8 +111,7 @@ public abstract class AbstractGameObject
     		 velocity.y += acceleration.y * deltaTime;
     		 // Make sure the object's velocity does not exceed the
     		 // positive or negative terminal velocity
-    		 velocity.y = MathUtils.clamp(velocity.y, -
-    		terminalVelocity.y, terminalVelocity.y);
+    		 velocity.y = MathUtils.clamp(velocity.y, -terminalVelocity.y, terminalVelocity.y);
     }
 
 

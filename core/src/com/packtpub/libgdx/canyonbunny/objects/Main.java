@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.packtpub.canyonbunny.game.Assets;
+import com.packtpub.libgdx.canyonbunny.game.Assets;
 import com.packtpub.libgdx.canyonbunny.util.AudioManager;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
@@ -19,7 +19,7 @@ public class Main extends AbstractGameObject
 {
 	public ParticleEffect dustParticles = new ParticleEffect();
 	public static final String TAG = Main.class.getName();
-	private final float JUMP_TIME_MAX = 0.6f; //max jump time
+	private final float JUMP_TIME_MAX = 2.0f; //max jump time
 	private final float JUMP_TIME_MIN = 0.1f; //min jump time
 	private final float JUMP_TIME_OFFSET_FLYING = JUMP_TIME_MAX - 0.009f; //offset
 
@@ -86,13 +86,27 @@ public class Main extends AbstractGameObject
 					timeJumping = 0;
 					jumpState = JUMP_STATE.JUMP_RISING;
 				}
+				else if (velocity.x != 0)
+				{
+					//Gdx.app.log(TAG, "starting particles");
+					dustParticles.setPosition(position.x + dimension.x / 2, position.y+0.1f);
+					dustParticles.start();
+				}
+				else if (velocity.x == 0)
+				{
+					dustParticles.allowCompletion();
+				}
 				break;
-				case JUMP_RISING: // Rising in the air
+
+			case JUMP_RISING: // Rising in the air
+
 					if (!jumpKeyPressed)
 						jumpState = JUMP_STATE.JUMP_FALLING;
 					break;
-				case FALLING:// Falling down
-				case JUMP_FALLING: // Falling down after jump
+
+			case FALLING:// Falling down
+
+			case JUMP_FALLING: // Falling down after jump
 					if (jumpKeyPressed && hasBeerPowerup)
 					{
 						AudioManager.instance.play(
@@ -133,11 +147,17 @@ public class Main extends AbstractGameObject
 	public void update (float deltaTime)
 	{
 		super.update(deltaTime);
+		if(body != null)
+		{
+			body.setLinearVelocity(velocity);
+			position.set(body.getPosition());
+		}
 		if(velocity.x != 0)
 		{
 			viewDirection = velocity.x < 0 ? VIEW_DIRECTION.LEFT : VIEW_DIRECTION.RIGHT;
 
 		}
+
 		if(velocity.x!= 0)
 		{
 			if(timeLeftBeerPowerup > 0)
