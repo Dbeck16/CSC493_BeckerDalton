@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.packtpub.libgdx.canyonbunny.util.CharacterSkin;
@@ -49,6 +50,7 @@ public class MenuScreen extends AbstractGameScreen
 	private Button btnMenuOptions;
 	// options
 	private Window winOptions;
+	private Window highScore;
 	private TextButton btnWinOptSave;
 	private TextButton btnWinOptCancel;
 	private CheckBox chkSound;
@@ -62,6 +64,8 @@ public class MenuScreen extends AbstractGameScreen
 	private final float DEBUG_REBUILD_INTERVAL = 5.0f;
 	private boolean debugEnabled = false;
 	private float debugRebuildStage;
+
+
 
 	/**
 	 * menu screen constructor
@@ -147,6 +151,7 @@ public class MenuScreen extends AbstractGameScreen
 		Table layerLogos = buildLogosLayer();
 		Table layerControls = buildControlsLayer();
 		Table layerOptionsWindow = buildOptionsWindowLayer();
+		Table layerHighScores = buildHighScores();
 
 		// assemble stage for menu screen
 		stage.clear();
@@ -158,6 +163,7 @@ public class MenuScreen extends AbstractGameScreen
 		stack.add(layerLogos);
 		stack.add(layerControls);
 		stage.addActor(layerOptionsWindow);
+		stage.addActor(layerHighScores);
 	}
 	/**
 	 * builds the background of main menu
@@ -248,6 +254,29 @@ public class MenuScreen extends AbstractGameScreen
 		(Constants.VIEWPORT_GUI_WIDTH - winOptions.getWidth() - 50,
 		50);
 		return winOptions;
+	}
+
+	private Table buildHighScores()
+	{
+		GamePreferences prefs = GamePreferences.instance;
+		highScore = new Window("High Score", skinLibgdx);
+
+		highScore.add("1: " + prefs.getHS(0)).row();
+		highScore.add("2: " + prefs.getHS(1)).row();
+		highScore.add("3: " + prefs.getHS(2)).row();
+
+
+		// Make options window slightly transparent
+		highScore.setColor(1, 1, 1, 0.8f);
+
+
+		// Hide options window by default
+		highScore.setVisible(true);
+
+		highScore.pack();
+		// Move options window to bottom right corner
+		highScore.setPosition(50, 50);
+		return highScore;
 	}
 
 	/**

@@ -58,7 +58,14 @@ public class Beer extends AbstractGameObject
 	 */
 	public int getScore()
 	{
-		return 250;
+		return -250;
+	}
+
+	@Override
+	public void update(float deltaTime)
+	{
+		super.update(deltaTime);
+		rotation += (deltaTime % 360) * 50;
 	}
 
 }

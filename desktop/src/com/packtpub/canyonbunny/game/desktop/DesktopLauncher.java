@@ -16,7 +16,7 @@ public class DesktopLauncher
 {
 	// Keeps track of whether or not to rebuild the texture atlas.
 	private static boolean rebuildAtlas = false;
-	// Checks if it should (re)draw debug outlines in the texture atlas
+	// Checks if it should (re)draw debug outlines in the texture atlasX
 	private static boolean drawDebugOutline = false;
 
 	public static void main(String[] arg)
@@ -32,6 +32,7 @@ public class DesktopLauncher
 
 
 			TexturePacker.process(settings, "assets-raw/images/", "../core/assets/images/", "canyonbunny.pack");
+			TexturePacker.process(settings, "assets-raw/images-ui", "../core/assets/images/", "canyonbunny-ui.pack");
 		}
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();

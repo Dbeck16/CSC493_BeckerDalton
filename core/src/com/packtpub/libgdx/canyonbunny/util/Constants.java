@@ -18,6 +18,7 @@ public class Constants
 
 	// Location of image file for level 01
 	public static final String LEVEL_01 = "../core/assets/levels/level-01.png";
+	public static final String LEVEL_02 = "../core/assets/levels/level-02.png";
 	//GUI Width
 	public static final float VIEWPORT_GUI_WIDTH = 800.0f;
 	//GUI Height

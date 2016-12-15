@@ -5,12 +5,14 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -142,11 +144,13 @@ public class Assets implements Disposable, AssetErrorListener
 	{
 		 public final AtlasRegion buildings;
 		 public final AtlasRegion sky;
+		 public final AtlasRegion goal;
 
 		 public AssetLevelDecoration (TextureAtlas atlas)
 		 {
 			 buildings = atlas.findRegion("Buildings");
 			 sky = atlas.findRegion("Sky");
+			 goal = atlas.findRegion("goal");
 		 }
 	}
 	public class AssetBeer
@@ -160,9 +164,16 @@ public class Assets implements Disposable, AssetErrorListener
 	public class AssetScroll
 	{
 		public final AtlasRegion scroll;
+		public final Animation animScroll;
 		public AssetScroll(TextureAtlas atlas)
 		{
 			scroll = atlas.findRegion("Scroll");
+
+			Array<AtlasRegion> regions = atlas.findRegions("anim_scroll");
+			AtlasRegion region = regions.first();
+			for (int i = 0; i < 10; i++)
+				regions.insert(0, region);
+			animScroll = new Animation (1.0f / 20.0f, regions, Animation.PlayMode.LOOP);
 		}
 	}
 	public class AssetFonts

@@ -25,6 +25,7 @@ import com.packtpub.libgdx.canyonbunny.util.CameraHelper;
 import com.packtpub.libgdx.canyonbunny.util.CollisionHandler;
 import com.packtpub.libgdx.canyonbunny.objects.Tiles;
 import com.packtpub.libgdx.canyonbunny.util.Constants;
+import com.packtpub.libgdx.canyonbunny.util.GamePreferences;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -53,6 +54,10 @@ public class WorldController extends InputAdapter implements Disposable
 
 	public World b2world;
 
+	public boolean goalReached;
+	public boolean g1Reached;
+	public boolean g2Reached;
+
 	private Game game;
 
 	/**
@@ -60,10 +65,20 @@ public class WorldController extends InputAdapter implements Disposable
 	 */
 	private void initLevel()
 	{
-		score = 0;
-		level = new Level(Constants.LEVEL_01);
-		cameraHelper.setTarget(level.main);
-		initPhysics();
+
+		if(g1Reached)
+		{
+			level = new Level(Constants.LEVEL_02);
+			cameraHelper.setTarget(level.main);
+			initPhysics();
+		}
+		else
+		{
+			level = new Level(Constants.LEVEL_01);
+			score = 0;
+			cameraHelper.setTarget(level.main);
+			initPhysics();
+		}
 	}
 
 	/**
@@ -118,6 +133,7 @@ public class WorldController extends InputAdapter implements Disposable
 	 */
 	public void update(float deltaTime)
 	{
+		GamePreferences prefs = GamePreferences.instance;
 		handleDebugInput(deltaTime);
 		handleInputGame(deltaTime);
 		cameraHelper.update(deltaTime);
@@ -131,6 +147,16 @@ public class WorldController extends InputAdapter implements Disposable
 			if(timeLeftGameOverDelay < 0)
 			{
 				backToMenu();
+			}
+		}
+		else if(goalReached)
+		{
+			g1Reached = true;
+			timeLeftGameOverDelay -= deltaTime;
+			if(timeLeftGameOverDelay < 0)
+			{
+				prefs.addHS(score);
+				initLevel();
 			}
 		}
 		else
@@ -175,6 +201,8 @@ public class WorldController extends InputAdapter implements Disposable
 			if (Gdx.input.isKeyPressed(Keys.DOWN)) moveCamera(0, -camMoveSpeed);
 
 			if (Gdx.input.isKeyPressed(Keys.BACKSPACE))cameraHelper.setPosition(0, 0);
+
+			if (Gdx.input.isKeyPressed(Keys.ESCAPE)) backToMenu();
 		}
 		//Camera Controls (zoom)
 		float camZoomSpeed = 1 * deltaTime;
@@ -317,6 +345,23 @@ public class WorldController extends InputAdapter implements Disposable
 			 onCollisionMainWithBeer(beer);
 			 break;
 		 }
+		 if (!goalReached)
+		 {
+			 r2.set(level.goal.bounds);
+			 r2.x += level.goal.position.x;
+			 r2.y += level.goal.position.y;
+			 if (r1.overlaps(r2)) onCollisionBunnyWithGoal();
+
+		 }
+
+		}
+
+		private void onCollisionBunnyWithGoal()
+		{
+			goalReached = true;
+			timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
+			Vector2 centerPosBunnyHead = new Vector2(level.main.position);
+			centerPosBunnyHead.x += level.main.bounds.width;
 		}
 
 		/**
@@ -376,7 +421,7 @@ public class WorldController extends InputAdapter implements Disposable
 		{
 			//switch to menu screen
 			game.setScreen(new MenuScreen(game));
-			dispose();
+
 		}
 		private void initPhysics ()
 		{
@@ -387,7 +432,7 @@ public class WorldController extends InputAdapter implements Disposable
 			// Rocks
 			Vector2 origin = new Vector2();
 
-			for (Tiles rock : level.tiles)
+			/*for (Tiles rock : level.tiles)
 			{
 				BodyDef bodyDef = new BodyDef();
 				bodyDef.type = BodyType.KinematicBody;
@@ -403,7 +448,7 @@ public class WorldController extends InputAdapter implements Disposable
 				fixtureDef.shape = polygonShape;
 				body.createFixture(fixtureDef);
 				polygonShape.dispose();
-			}
+			}*/
 			/*
 			Main player = level.main;
 			BodyDef bodyDef = new BodyDef();

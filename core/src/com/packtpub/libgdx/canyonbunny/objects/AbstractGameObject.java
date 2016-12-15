@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.canyonbunny.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +21,8 @@ public abstract class AbstractGameObject
     public Vector2 scale;
     public float rotation;
     public Body body;
+    public float stateTime;
+    public Animation animation;
     /**
      * abstract class for all game objects
      */
@@ -43,6 +46,7 @@ public abstract class AbstractGameObject
      */
     public void update(float deltaTime)
     {
+    	stateTime += deltaTime;
     	if(body == null)
     	{
 
@@ -114,6 +118,11 @@ public abstract class AbstractGameObject
     		 velocity.y = MathUtils.clamp(velocity.y, -terminalVelocity.y, terminalVelocity.y);
     }
 
+    public void setAnimation (Animation animation)
+    {
+    	this.animation = animation;
+    	stateTime = 0;
+    }
 
 
 }

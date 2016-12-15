@@ -1,48 +1,104 @@
 
 canyonbunny.pack.png
-size: 1024,512
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Beer
   rotate: false
-  xy: 819, 45
+  xy: 288, 278
   size: 150, 440
   orig: 150, 440
   offset: 0, 0
   index: -1
 Buildings
   rotate: false
-  xy: 2, 206
+  xy: 2, 720
   size: 493, 279
   orig: 493, 279
   offset: 0, 0
   index: -1
 Main
   rotate: false
-  xy: 2, 2
+  xy: 819, 797
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Scroll
   rotate: false
-  xy: 2, 68
+  xy: 288, 140
   size: 100, 136
   orig: 100, 136
   offset: 0, 0
   index: -1
 Sky
   rotate: false
-  xy: 497, 229
+  xy: 497, 743
   size: 320, 256
   orig: 320, 256
   offset: 0, 0
   index: -1
 Tile
   rotate: false
-  xy: 971, 453
+  xy: 440, 329
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+anim_orb
+  rotate: false
+  xy: 2, 363
+  size: 284, 355
+  orig: 284, 355
+  offset: 0, 0
+  index: 1
+anim_orb
+  rotate: false
+  xy: 2, 6
+  size: 284, 355
+  orig: 284, 355
+  offset: 0, 0
+  index: 2
+anim_orb
+  rotate: false
+  xy: 440, 363
+  size: 284, 355
+  orig: 284, 355
+  offset: 0, 0
+  index: 3
+anim_scroll
+  rotate: false
+  xy: 819, 863
+  size: 100, 136
+  orig: 100, 136
+  offset: 0, 0
+  index: 1
+anim_scroll
+  rotate: false
+  xy: 921, 863
+  size: 100, 136
+  orig: 100, 136
+  offset: 0, 0
+  index: 2
+anim_scroll
+  rotate: false
+  xy: 288, 2
+  size: 100, 136
+  orig: 100, 136
+  offset: 0, 0
+  index: 3
+anim_scroll
+  rotate: false
+  xy: 390, 140
+  size: 100, 136
+  orig: 100, 136
+  offset: 0, 0
+  index: 4
+goal
+  rotate: false
+  xy: 726, 386
+  size: 284, 355
+  orig: 284, 355
   offset: 0, 0
   index: -1

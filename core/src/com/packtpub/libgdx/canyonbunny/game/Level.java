@@ -10,6 +10,7 @@ import com.packtpub.libgdx.canyonbunny.objects.Tiles;
 import com.packtpub.libgdx.canyonbunny.objects.Buildings;
 import com.packtpub.libgdx.canyonbunny.objects.Beer;
 import com.packtpub.libgdx.canyonbunny.objects.Diploma;
+import com.packtpub.libgdx.canyonbunny.objects.Goal;
 import com.packtpub.libgdx.canyonbunny.objects.Main;
 
 /**
@@ -24,6 +25,7 @@ public class Level
 	public Main main;
 	public Array<Beer> beer;
 	public Array<Diploma> diploma;
+	public Goal goal;
 
 
 	public enum BLOCK_TYPE //hold values for level being loaded in.. using rgba values it can determine what each color does
@@ -31,7 +33,8 @@ public class Level
 		EMPTY(0, 0, 0), //black
 		TILE(0, 255, 0), //green
 		PLAYER_SPAWNPOINT(255, 255, 255), //white
-		ITEM_BEER(255, 0, 255), // purple
+		ITEM_BEER(255, 0, 255),// purple
+		GOAL(255,0,0),
 		ITEM_PAPER(255, 255, 0); // yellow
 
 		private int color;
@@ -155,6 +158,13 @@ public class Level
 							+ offsetHeight);
 					diploma.add((Diploma)obj);
 				}
+				else if (BLOCK_TYPE.GOAL.sameColor(currentPixel))
+				{
+					obj = new Goal();
+					offsetHeight = -4.5f;
+					obj.position.set(pixelX, baseHeight + offsetHeight);
+					goal = (Goal)obj;
+				}
 				else
 				{
 					int r = 0xff & (currentPixel >>> 24); //red color channel
@@ -200,6 +210,8 @@ public class Level
 		//draw diplomas
 		for(Diploma diploma : diploma)
 			diploma.render(batch);
+
+		goal.render(batch);
 
 	}
 	/**
