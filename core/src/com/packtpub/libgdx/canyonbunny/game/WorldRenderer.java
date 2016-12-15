@@ -21,8 +21,8 @@ public class WorldRenderer implements Disposable
 	private SpriteBatch batch; //Used for creating our sprites
 	private WorldController worldController;	//instance of world controller
 	private OrthographicCamera cameraGUI;	//Orthograpic camera for GUI.
-	private static final boolean DEBUG_DRAW_BOX2D_WORLD = true;
-	private Box2DDebugRenderer b2debugRenderer;
+//	private static final boolean DEBUG_DRAW_BOX2D_WORLD = true;
+//	private Box2DDebugRenderer b2debugRenderer;
 
 	/**
 	 * Constructor for WorldRenderer
@@ -50,7 +50,7 @@ public class WorldRenderer implements Disposable
 		cameraGUI.setToOrtho(true); //flip y-axis
 		cameraGUI.update();
 
-		b2debugRenderer = new Box2DDebugRenderer();
+//		b2debugRenderer = new Box2DDebugRenderer();
 	}
 
 	/**
@@ -88,11 +88,11 @@ public class WorldRenderer implements Disposable
 		batch.begin();
 		worldController.level.render(batch);
 		batch.end();
-		if (DEBUG_DRAW_BOX2D_WORLD)
+/*		if (DEBUG_DRAW_BOX2D_WORLD)
 		{
 			b2debugRenderer.render(worldController.b2world,
 			camera.combined);
-		}
+		}*/
 	}
 
 

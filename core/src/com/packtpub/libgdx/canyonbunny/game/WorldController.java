@@ -55,8 +55,7 @@ public class WorldController extends InputAdapter implements Disposable
 	public World b2world;
 
 	public boolean goalReached;
-	public boolean g1Reached;
-	public boolean g2Reached;
+	public int g1Reached = 0;
 
 	private Game game;
 
@@ -65,19 +64,19 @@ public class WorldController extends InputAdapter implements Disposable
 	 */
 	private void initLevel()
 	{
-
-		if(g1Reached)
+		if(g1Reached == 1)
 		{
-			level = new Level(Constants.LEVEL_02);
+			goalReached = false;
+			level = new Level(Constants.LEVEL_01);
 			cameraHelper.setTarget(level.main);
-			initPhysics();
+//			initPhysics();
 		}
 		else
 		{
-			level = new Level(Constants.LEVEL_01);
+			level = new Level(Constants.LEVEL_02);
 			score = 0;
 			cameraHelper.setTarget(level.main);
-			initPhysics();
+//			initPhysics();
 		}
 	}
 
@@ -98,6 +97,7 @@ public class WorldController extends InputAdapter implements Disposable
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
 		lives = Constants.LIVES_START;
+		g1Reached = 0;
 		timeLeftGameOverDelay = 0;
 		initLevel();
 	}
@@ -137,26 +137,36 @@ public class WorldController extends InputAdapter implements Disposable
 		handleDebugInput(deltaTime);
 		handleInputGame(deltaTime);
 		cameraHelper.update(deltaTime);
-		if (timeLeftGameOverDelay < 0) backToMenu();
+//		if (timeLeftGameOverDelay < 0) backToMenu();
 		level.update(deltaTime);
 		testCollisions();
-		b2world.step(deltaTime, 8, 3);
+//		b2world.step(deltaTime, 8, 3);
 		if(isGameOver())
 		{
 			timeLeftGameOverDelay -= deltaTime;
 			if(timeLeftGameOverDelay < 0)
 			{
+				prefs.addHS(score);
+				prefs.save();
 				backToMenu();
 			}
 		}
-		else if(goalReached)
+		if(goalReached)
 		{
-			g1Reached = true;
-			timeLeftGameOverDelay -= deltaTime;
-			if(timeLeftGameOverDelay < 0)
+			if(g1Reached == 1)
+			{
+				timeLeftGameOverDelay -= deltaTime;
+				if(timeLeftGameOverDelay < 0)
+				{
+					timeLeftGameOverDelay = 0;
+					initLevel();
+				}
+			}
+			else
 			{
 				prefs.addHS(score);
-				initLevel();
+				prefs.save();
+				backToMenu();
 			}
 		}
 		else
@@ -359,9 +369,11 @@ public class WorldController extends InputAdapter implements Disposable
 		private void onCollisionBunnyWithGoal()
 		{
 			goalReached = true;
+			g1Reached++ ;
 			timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
 			Vector2 centerPosBunnyHead = new Vector2(level.main.position);
 			centerPosBunnyHead.x += level.main.bounds.width;
+			Gdx.app.debug(TAG,  "GOAL HAS BEEN REACHED!");
 		}
 
 		/**
@@ -478,6 +490,7 @@ public class WorldController extends InputAdapter implements Disposable
 		public void dispose()
 		{
 			if (b2world != null) b2world.dispose();
+
 		}
 
 		public void flagForRemoval(AbstractGameObject obj)

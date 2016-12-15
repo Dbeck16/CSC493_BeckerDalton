@@ -22,9 +22,10 @@ public class GamePreferences
 	public float volMusic;
 	public int charSkin;
 	public boolean showFpsCounter;
-
-
-	private Array hs;
+	public Array hs;
+	public int first;
+	public int second;
+	public int third;
 
 	private Preferences prefs;
 
@@ -36,11 +37,6 @@ public class GamePreferences
 	private GamePreferences ()
 	{
 		prefs = Gdx.app.getPreferences(Constants.PREFERENCES);
-		hs = new Array<Integer>();
-		hs.setSize(4);
-		hs.set(0, 0);
-		hs.set(1, 0);
-		hs.set(2, 0);
 	}
 
 	/**
@@ -57,6 +53,19 @@ public class GamePreferences
 		volMusic = MathUtils.clamp(prefs.getFloat("volMusic", 0.5f), 0.0f, 1.0f);
 
 		showFpsCounter = prefs.getBoolean("showFpsCounter", false);
+
+		first = prefs.getInteger("first");
+		second = prefs.getInteger("second");
+		third = prefs.getInteger("third");
+
+		hs = new Array();
+
+		hs.setSize(4);
+
+		hs.set(0, first);
+		hs.set(1, second);
+		hs.set(2, third);
+
 
 	}
 	/**
@@ -75,6 +84,10 @@ public class GamePreferences
 		prefs.putInteger("charSkin", charSkin);
 
 		prefs.putBoolean("showFpsCounter", showFpsCounter);
+
+		prefs.putInteger("first", first);
+		prefs.putInteger("third", third);
+		prefs.putInteger("second", second);
 
 		prefs.flush();
 	}
