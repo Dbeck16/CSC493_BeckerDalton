@@ -8,33 +8,32 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
 /**
- * diploma class
+ * orbs class
  * @author Dalton
  *
  */
-public class Diploma extends AbstractGameObject
+public class Orbs extends AbstractGameObject
 {
-	private TextureRegion regDiploma;
+	private TextureRegion regorbs;
 	public boolean collected; //Keeps track of if we collected a coin
 
 	/**
-	 * diploma constructor
+	 * orbs constructor
 	 */
-	public Diploma ()
+	public Orbs ()
 	{
 		init();
 	}
 	/**
-	 * initializes our diploma
+	 * initializes our orbs
 	 */
 	private void init ()
 	{
 		dimension.set(0.5f, 0.5f);
 
-		setAnimation(Assets.instance.scroll.animScroll);
+		setAnimation(Assets.instance.orbs.animOrbs);
 		stateTime = MathUtils.random(0.0f, 1.0f);
 
-		regDiploma = Assets.instance.scroll.scroll;
 		// Set bounding box for collision detection
 		bounds.set(0, 0, dimension.x, dimension.y);
 		collected = false;
@@ -60,7 +59,7 @@ public class Diploma extends AbstractGameObject
     	}
 	}
 	/**
-	 * renders a diploma
+	 * renders a orbs
 	 */
 	public void render (SpriteBatch batch)
 	{
@@ -78,6 +77,6 @@ public class Diploma extends AbstractGameObject
  */
  public int getScore()
  	{
-	 	return 100;
+	 	return 1000;
  	}
 }

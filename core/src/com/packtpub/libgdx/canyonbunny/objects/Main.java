@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 public class Main extends AbstractGameObject
 {
 	public ParticleEffect dustParticles = new ParticleEffect();
+	public ParticleEffect obtainedParticle = new ParticleEffect();
 	public static final String TAG = Main.class.getName();
 	private final float JUMP_TIME_MAX = 2.0f; //max jump time
 	private final float JUMP_TIME_MIN = 0.1f; //min jump time
@@ -69,6 +70,7 @@ public class Main extends AbstractGameObject
 		 timeLeftBeerPowerup = 0;
 		 //particles
 		 dustParticles.load(Gdx.files.internal("../core/assets/particles/dust.pfx"), Gdx.files.internal("../core/assets/particles"));
+		 obtainedParticle.load(Gdx.files.internal("../core/assets/particles/obtained.pfx"), Gdx.files.internal("../core/assets/particles"));
 	}
 	/**
 	 * sets Main to jumping state
@@ -112,6 +114,7 @@ public class Main extends AbstractGameObject
 						AudioManager.instance.play(
 								Assets.instance.sounds.jumpWithFeather, 1,
 								MathUtils.random(1.0f, 1.1f));
+						Gdx.app.log(TAG, "starting particles");
 						 timeJumping = JUMP_TIME_OFFSET_FLYING;
 						 jumpState = JUMP_STATE.JUMP_RISING;
 					}
@@ -130,6 +133,7 @@ public class Main extends AbstractGameObject
 		{
 			timeLeftBeerPowerup = Constants.ITEM_BEER_POWERUP_DURATION;
 		}
+
 	};
 	/**
 	 * checks if main has Beer power up
@@ -171,9 +175,11 @@ public class Main extends AbstractGameObject
 					setBeerPowerup(false);
 					terminalVelocity.set(3.0f, 4.0f);
 				}
+
 			}
 		}
 		dustParticles.update(deltaTime);
+		obtainedParticle.update(deltaTime);
 
 	}
 
@@ -191,6 +197,9 @@ public class Main extends AbstractGameObject
 		if (hasBeerPowerup)
 		{
 			batch.setColor(1.0f,0.8f,0.0f,1.0f);
+			obtainedParticle.setPosition(position.x + dimension.x / 2, position.y+0.1f);
+			obtainedParticle.start();
+			obtainedParticle.draw(batch);
 		}
 		//draw image
 		reg = regMain;

@@ -44,6 +44,7 @@ public class Assets implements Disposable, AssetErrorListener
 	public AssetTiles tile;
 	public AssetBeer beer;
 	public AssetScroll scroll;
+	public AssetOrbs orbs;
 	public AssetSounds sounds; //sounds assets.
 	public AssetMusic music; //music assets
 
@@ -63,6 +64,9 @@ public class Assets implements Disposable, AssetErrorListener
 		assetManager.load("../core/assets/sounds/pickup_coin.wav", Sound.class);
 		assetManager.load("../core/assets/sounds/pickup_feather.wav", Sound.class);
 		assetManager.load("../core/assets/sounds/live_lost.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/pickup_orb.wav", Sound.class);
+		assetManager.load("../core/assets/sounds/goal_sound.wav", Sound.class);
+
 
 		// load music
 		assetManager.load("../core/assets/music/keith303_-_brand_new_highscore.mp3", Music.class);
@@ -89,6 +93,7 @@ public class Assets implements Disposable, AssetErrorListener
 		tile = new AssetTiles(atlas);
 		beer = new AssetBeer(atlas);
 		scroll = new AssetScroll(atlas);
+		orbs = new AssetOrbs(atlas);
 		levelDecoration = new AssetLevelDecoration(atlas);
 		fonts = new AssetFonts();
 		sounds = new AssetSounds(assetManager);
@@ -146,6 +151,7 @@ public class Assets implements Disposable, AssetErrorListener
 		 public final AtlasRegion sky;
 		 public final AtlasRegion goal;
 
+
 		 public AssetLevelDecoration (TextureAtlas atlas)
 		 {
 			 buildings = atlas.findRegion("Buildings");
@@ -161,6 +167,7 @@ public class Assets implements Disposable, AssetErrorListener
 			beer = atlas.findRegion("Beer");
 		}
 	}
+
 	public class AssetScroll
 	{
 		public final AtlasRegion scroll;
@@ -173,7 +180,26 @@ public class Assets implements Disposable, AssetErrorListener
 			AtlasRegion region = regions.first();
 			for (int i = 0; i < 10; i++)
 				regions.insert(0, region);
-			animScroll = new Animation (1.0f / 20.0f, regions, Animation.PlayMode.LOOP);
+			animScroll = new Animation (1.0f / 5.0f, regions, Animation.PlayMode.LOOP);
+		}
+	}
+
+	public class AssetOrbs
+	{
+		public final AtlasRegion orbs;
+		public final Animation animOrbs;
+		public AssetOrbs(TextureAtlas atlas)
+		{
+			orbs = atlas.findRegion("orb_01");
+
+			Array<AtlasRegion> regions = null;
+			AtlasRegion region = null;
+
+			regions = atlas.findRegions("orb");
+			region = regions.first();
+			for (int i = 0; i < 2; i++)
+				regions.insert(0, region);
+			animOrbs = new Animation (1.0f/10.f, regions, Animation.PlayMode.LOOP_PINGPONG);
 		}
 	}
 	public class AssetFonts
@@ -220,12 +246,16 @@ public class Assets implements Disposable, AssetErrorListener
 		public final Sound pickupCoin;
 		public final Sound pickupFeather;
 		public final Sound liveLost;
+		public final Sound PickupOrb;
+		public final Sound Goal;
 		public AssetSounds (AssetManager am)
 		{
 			jump = am.get("../core/assets/sounds/jump.wav", Sound.class);
 			jumpWithFeather = am.get("../core/assets/sounds/jump_with_feather.wav",Sound.class);
 			pickupCoin = am.get("../core/assets/sounds/pickup_coin.wav", Sound.class);
 			pickupFeather = am.get("../core/assets/sounds/pickup_feather.wav",Sound.class);
+			PickupOrb = am.get("../core/assets/sounds/pickup_orb.wav", Sound.class);
+			Goal = am.get("../core/assets/sounds/goal_sound.wav", Sound.class);
 			liveLost = am.get("../core/assets/sounds/live_lost.wav", Sound.class);
 		}
 	}

@@ -46,27 +46,6 @@ Tile
   orig: 32, 32
   offset: 0, 0
   index: -1
-anim_orb
-  rotate: false
-  xy: 2, 363
-  size: 284, 355
-  orig: 284, 355
-  offset: 0, 0
-  index: 1
-anim_orb
-  rotate: false
-  xy: 2, 6
-  size: 284, 355
-  orig: 284, 355
-  offset: 0, 0
-  index: 2
-anim_orb
-  rotate: false
-  xy: 440, 363
-  size: 284, 355
-  orig: 284, 355
-  offset: 0, 0
-  index: 3
 anim_scroll
   rotate: false
   xy: 819, 863
@@ -97,8 +76,29 @@ anim_scroll
   index: 4
 goal
   rotate: false
-  xy: 726, 386
+  xy: 2, 363
   size: 284, 355
   orig: 284, 355
   offset: 0, 0
   index: -1
+orb
+  rotate: false
+  xy: 2, 6
+  size: 284, 355
+  orig: 284, 355
+  offset: 0, 0
+  index: 1
+orb
+  rotate: false
+  xy: 440, 363
+  size: 284, 355
+  orig: 284, 355
+  offset: 0, 0
+  index: 2
+orb
+  rotate: false
+  xy: 726, 386
+  size: 284, 355
+  orig: 284, 355
+  offset: 0, 0
+  index: 3

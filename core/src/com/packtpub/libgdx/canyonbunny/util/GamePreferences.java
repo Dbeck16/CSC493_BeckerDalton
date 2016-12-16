@@ -102,6 +102,14 @@ public class GamePreferences
 		{
 			hs.set(3, 0);
 		}
+		updateHS();
+	}
+
+	private void updateHS()
+	{
+		first = (int)hs.get(0);
+		second = (int)hs.get(1);
+		third = (int)hs.get(2);
 	}
 
 	public Object getHS(int i)

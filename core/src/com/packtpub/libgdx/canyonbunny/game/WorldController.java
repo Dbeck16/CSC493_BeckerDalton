@@ -3,6 +3,7 @@ package com.packtpub.libgdx.canyonbunny.game;
 import com.badlogic.gdx.graphics.Pixmap;import com.badlogic.gdx.math.Rectangle;
 import com.packtpub.libgdx.canyonbunny.objects.Main;
 import com.packtpub.libgdx.canyonbunny.objects.Main.JUMP_STATE;
+import com.packtpub.libgdx.canyonbunny.objects.Orbs;
 import com.packtpub.libgdx.canyonbunny.objects.Diploma;
 import com.packtpub.libgdx.canyonbunny.objects.AbstractGameObject;
 import com.packtpub.libgdx.canyonbunny.objects.Beer;
@@ -49,7 +50,7 @@ public class WorldController extends InputAdapter implements Disposable
 
 	public Level level;	//keeps track of what level
 	public int lives;	//keeps track of how many lives you have left
-	public int score;	//keeps track of score in game
+	public int score = 0;	//keeps track of score in game
 	public Array<AbstractGameObject> objectsToRemove;
 
 	public World b2world;
@@ -74,7 +75,6 @@ public class WorldController extends InputAdapter implements Disposable
 		else
 		{
 			level = new Level(Constants.LEVEL_02);
-			score = 0;
 			cameraHelper.setTarget(level.main);
 //			initPhysics();
 		}
@@ -184,6 +184,7 @@ public class WorldController extends InputAdapter implements Disposable
 			else
 			{
 				initLevel();
+				score -= 500;
 			}
 		}
 	}
@@ -313,6 +314,7 @@ public class WorldController extends InputAdapter implements Disposable
 		{
 			AudioManager.instance.play(Assets.instance.sounds.pickupFeather);
 			beer.collected = true;
+
 			score+= beer.getScore();
 			level.main.setBeerPowerup(true);
 			Gdx.app.log(TAG, "Beer Collected");
@@ -338,7 +340,10 @@ public class WorldController extends InputAdapter implements Disposable
 			// Test collision: Bunny Head <-> Gold Coins
 		 for (Diploma diploma: level.diploma)
 		 {
-			 if (diploma.collected) continue;
+			 if (diploma.collected)
+			 {
+				 continue;
+			 }
 			 r2.set(diploma.position.x, diploma.position.y,
 					 diploma.bounds.width, diploma.bounds.height);
 			 if (!r1.overlaps(r2)) continue;
@@ -355,6 +360,18 @@ public class WorldController extends InputAdapter implements Disposable
 			 onCollisionMainWithBeer(beer);
 			 break;
 		 }
+		 for (Orbs orb: level.orb)
+		 {
+			 if (orb.collected)
+			 {
+				 continue;
+			 }
+			 r2.set(orb.position.x, orb.position.y,
+					 orb.bounds.width, orb.bounds.height);
+			 if (!r1.overlaps(r2)) continue;
+			 onCollisionMainWithOrb(orb);
+			 break;
+		 }
 		 if (!goalReached)
 		 {
 			 r2.set(level.goal.bounds);
@@ -366,10 +383,19 @@ public class WorldController extends InputAdapter implements Disposable
 
 		}
 
+		private void onCollisionMainWithOrb(Orbs orb)
+		{
+			AudioManager.instance.play(Assets.instance.sounds.PickupOrb);
+			orb.collected = true;
+			score+= orb.getScore();
+			Gdx.app.log(TAG,  "Diploma collect");
+		}
+
 		private void onCollisionBunnyWithGoal()
 		{
 			goalReached = true;
 			g1Reached++ ;
+			AudioManager.instance.play(Assets.instance.sounds.Goal);
 			timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
 			Vector2 centerPosBunnyHead = new Vector2(level.main.position);
 			centerPosBunnyHead.x += level.main.bounds.width;

@@ -19,6 +19,7 @@ public class DesktopLauncher
 	// Checks if it should (re)draw debug outlines in the texture atlasX
 	private static boolean drawDebugOutline = false;
 
+
 	public static void main(String[] arg)
 	{
 		// Checks if it should rebuild the texture atlas

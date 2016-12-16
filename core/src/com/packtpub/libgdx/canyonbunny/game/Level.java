@@ -12,6 +12,7 @@ import com.packtpub.libgdx.canyonbunny.objects.Beer;
 import com.packtpub.libgdx.canyonbunny.objects.Diploma;
 import com.packtpub.libgdx.canyonbunny.objects.Goal;
 import com.packtpub.libgdx.canyonbunny.objects.Main;
+import com.packtpub.libgdx.canyonbunny.objects.Orbs;
 
 /**
  *
@@ -26,6 +27,7 @@ public class Level
 	public Array<Beer> beer;
 	public Array<Diploma> diploma;
 	public Goal goal;
+	public Array<Orbs> orb;
 
 
 	public enum BLOCK_TYPE //hold values for level being loaded in.. using rgba values it can determine what each color does
@@ -35,7 +37,8 @@ public class Level
 		PLAYER_SPAWNPOINT(255, 255, 255), //white
 		ITEM_BEER(255, 0, 255),// purple
 		GOAL(255,0,0),
-		ITEM_PAPER(255, 255, 0); // yellow
+		ITEM_PAPER(255, 255, 0), // yellow
+		ITEM_ORBS(0, 255, 255); // cyan
 
 		private int color;
 
@@ -91,6 +94,7 @@ public class Level
 		tiles = new Array<Tiles>(); //array for holding all of the rocks
 		beer = new Array<Beer>();
 		diploma = new Array<Diploma>();
+		orb = new Array<Orbs>();
 
 		//load image file that respresents the level data
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
@@ -165,6 +169,13 @@ public class Level
 					obj.position.set(pixelX, baseHeight + offsetHeight);
 					goal = (Goal)obj;
 				}
+				else if (BLOCK_TYPE.ITEM_ORBS.sameColor(currentPixel))
+				{
+					obj = new Orbs();
+					offsetHeight = -1.5f;
+					obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
+					orb.add((Orbs) obj);
+				}
 				else
 				{
 					int r = 0xff & (currentPixel >>> 24); //red color channel
@@ -211,6 +222,9 @@ public class Level
 		for(Diploma diploma : diploma)
 			diploma.render(batch);
 
+		for(Orbs orbs : orb)
+			orbs.render(batch);
+
 		goal.render(batch);
 
 	}
@@ -232,6 +246,9 @@ public class Level
 		for(Diploma diploma : diploma)
 
 			diploma.update(deltaTime);
+
+		for(Orbs orb : orb)
+			orb.update(deltaTime);
 
 	}
 
